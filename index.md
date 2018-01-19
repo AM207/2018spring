@@ -10,8 +10,9 @@ noline: 1
 
 **TFs:**
 
-Weiwei Pan, Rafael Martinez Galarza, Michael Farrell, Patrick Ohiomoba
+Patrick Ohiomoba, Will Claybaugh
 
+More to come.
 
 ## When?
 
@@ -19,25 +20,22 @@ Tuesday 11.30am - 1pm, Lecture. Compulsory to attend. Maxwell Dworkin G115.
 
 Thursday 11.30am - 1pm, Lecture. Compulsory to attend. Maxwell Dworkin G115.
 
-Fridays 2pm - 4pm Lab. Compulsory to attend. Pierce 301.
+Fridays 11am - 12.30pm Lab. Compulsory to attend. Pierce 301.
 
 ## Office Hours
 
-Always in B164, NW Building.
+Always in B125, Maxwell Dworkin.
 
 - anytime by appointment with any of us.
 - Rahul: Tue and Thu 1.30pm to 2.30pm. ONLINE Thu 2.30-3.30pm.
-- Kevin: Wed 6-7pm
-- Michael: Wed 7pm to 8pm
-- Weiwei: Mon 4pm to 5pm
-- Patrick: ONLINE Wed 11pm-12am, ONLINE Thu 4pm to 5pm
-- Rafael: some weeks, time TBD.
+- Patrick: Still to come
+- Will: Still to come
 
 ## Online?
 
-- web site at https://am207.github.io/2017/ (you are reading it)
-- github repo at https://github.com/am207/2017 (clone this fresh for each class or fork it and set this original up as a remote)
-- discussions at [Piazza](https://piazza.com/class/iyavscizng7py)
+- web site at https://am207.github.io/2018spring/ (you are reading it)
+- github repo at https://github.com/am207/2018spring (clone this fresh for each class or fork it and set this original up as a remote)
+- discussions at Piazza (link to come)
 
 ## FAQ
 

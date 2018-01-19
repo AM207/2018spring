@@ -18,7 +18,7 @@ see [Resources](/resources.html) page.
 
 **Online Discussion Forum**
 
-We'll be using [Piazza](https://piazza.com/class/iyavscizng7py) as our online forum.
+We'll be using Piazza (link to come) as our online forum.
 
 ## Course Components
 
@@ -30,15 +30,15 @@ Lab is compulsory.
 
 **Homework**
 
-48 points
+70 points
 
-There will be a homework every week with a maximum of 2 questions. This homework should not take more than 4-5 hours. There will be 11 short format homeworks. These are to be submitted as jupyter notebooks.
+There will be a homework every week with a maximum of 3 questions. This homework should not take more than 7-8 hours. There will be 11 short format homeworks. These are to be submitted as jupyter notebooks.
 
-**Long-Format Homework**
+**Paper**
 
-32 points
+10 points
 
-There will be one long format homework every two-three weeks, for a total of 4 long-format homeworks through the semester. The long-format homework will be assigned along with the regular homework. The long format homework should be doable within 9-10 hours, but you will have >=2 weeks to do it. This means that all homework included, you ought to be spending about 10 hours per week on homework for the weeks in which you have long format homework. These are to be submitted as jupyter notebooks.
+There will be one paper, towards the end of this course. It will require reading and presenting a recent research development in the field.
 
 **Final exam**
 
@@ -81,7 +81,7 @@ You must acknowledge any source code that was not written by you by mentioning t
 
 **Deadlines and Late Days**
 
-Homework be turned in on time, including the long-format homework. You can have upto 3 late days across the semester, with no more than 1 late day on any homework, short or long. (That is you could be late by at most 1 day on at most 3 out of 15 homework submissions). No late days on the final exam.
+Homework must be turned in on time. You can have upto 3 late days across the semester, with no more than 1 late day on any homework. (That is you could be late by at most 1 day on at most 3 homework submissions). No late days on the final exam.
 
 Exceptions: Nada. No exceptions, except for illness, with a doctor's certificate.
 
