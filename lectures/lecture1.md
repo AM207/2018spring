@@ -7,7 +7,6 @@ noline: 1
 
 ## Slides
 
-- Deckset [markdown](../slides/lecture1.md)
 - [PDF](../slides/lecture1.pdf)
 
 ## Notes
