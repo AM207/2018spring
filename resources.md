@@ -28,9 +28,12 @@ We will not be using R or Stan, but the principles remain the same.
 
 ### Other useful books and sources
 
-Still to come
+- [Computer Age Statistical Inference](https://web.stanford.edu/~hastie/CASI/)
 
 
 ## Papers and other readings
 
-Still to Come
+### Week 1 Reading
+
+- Notes on Probability and Statistics from [Shalizi](http://bactra.org/prob-notes/srl.pdf)
+- Skim and keep for reference: the first 3 chapters of [Wasserman's All of Statistics](http://www.stat.cmu.edu/~larry/all-of-statistics/)

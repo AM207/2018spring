@@ -13,3 +13,8 @@ noline: 1
 
 - [Box's Loop](../wiki/boxloop.html)
 - [Probability](../wiki/probability.html)
+
+## Readings
+
+- Notes on Probability and Statistics from [Shalizi](http://bactra.org/prob-notes/srl.pdf)
+- Skim and keep for reference: the first 3 chapters of [Wasserman's All of Statistics](http://www.stat.cmu.edu/~larry/all-of-statistics/)
