@@ -35,7 +35,7 @@ Always in B125, Maxwell Dworkin.
 
 - web site at https://am207.github.io/2018spring/ (you are reading it)
 - github repo at https://github.com/am207/2018spring (clone this fresh for each class or fork it and set this original up as a remote)
-- discussions at Piazza (link to come)
+- discussions at [Piazza](https://piazza.com/class/jcr8h7o7yap73p)
 
 ## FAQ
 
