@@ -24,3 +24,6 @@ Lecture 1: **Introduction**
 
 [Slides and Notes](lectures/lecture1.html)
 
+Lecture 2: **Probability and Distributions and Frequentism**
+
+[Slides and Notes](lectures/lecture2.html)
