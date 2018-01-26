@@ -18,7 +18,7 @@ see [Resources](/resources.html) page.
 
 **Online Discussion Forum**
 
-We'll be using Piazza (link to come) as our online forum.
+We'll be using [Piazza](https://piazza.com/class/jcr8h7o7yap73p) as our online forum.
 
 ## Course Components
 
