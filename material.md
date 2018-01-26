@@ -28,3 +28,8 @@ Lecture 1: **Introduction**
 Lecture 2: **Probability and Distributions and Frequentism**
 
 [Slides and Notes](lectures/lecture2.html)
+
+Lab1: **Frequentism**
+
+[Material](lectures/lab1.html)
+
