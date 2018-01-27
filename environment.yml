@@ -8,3 +8,6 @@ dependencies:
 - scipy
 - seaborn
 - scikit-learn
+- pip:
+  - pymc3
+  - tensorflow
