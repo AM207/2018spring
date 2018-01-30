@@ -33,3 +33,10 @@ Lab1: **Frequentism**
 
 [Material](lectures/lab1.html)
 
+---
+
+### Week 2
+
+Lecture 3: **Law of Large Numbers, CLT, and Monte Carlo**
+
+[Slides, Notes and Readings](lectures/lecture3.html)
