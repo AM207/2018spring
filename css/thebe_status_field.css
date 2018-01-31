@@ -1,6 +1,7 @@
 .thebe-status-field input.thebe-status-field {
-  color: #a000000;
-  padding: 2px;
+  color: #a00000;
+  background-color: #ccc;
+  padding: 4px;
   background: none;
   box-shadow: none;
   border: 0;
