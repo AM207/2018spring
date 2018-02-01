@@ -71,7 +71,14 @@ In addition to the scores the Teaching Fellows will give detailed written feedba
 
 **Collaboration Policy**
 
-You can collaborate with up-to two additional people on any homework, as long as you write your own homework and mention your collaborators on it.
+“You can collaborate with up-to two additional people on any homework, as long as you write your own homework and mention your collaborators on it.”
+
+What does this mean?
+
+
+- You can talk to anyone as long as you write your own work for anything you plan on submitting
+- You can turn in 3 identical problem sets as long as each of you name both of your collaborators on your homework. Each person MUST turn in their own problem set.
+- Attribution is key!! Anything that you “borrow” from someone/someplace else please make sure to attribute!!!
 
 **Quoting Sources**
 
@@ -81,7 +88,9 @@ You must acknowledge any source code that was not written by you by mentioning t
 
 **Deadlines and Late Days**
 
-Homework must be turned in on time. You can have upto 3 late days across the semester, with no more than 1 late day on any homework. (That is you could be late by at most 1 day on at most 3 homework submissions). No late days on the final exam.
+Homework must be turned in on time. You can have upto 5 late days across the semester, with no more than 1 late day on any homework. (That is you could be late by at most 1 day on at most 5 homework submissions). No late days on the final exam.
+
+Homework will be due by 10am on the Friday the week after the thursday the homework was released.
 
 Exceptions: Nada. No exceptions, except for illness, with a doctor's certificate.
 
