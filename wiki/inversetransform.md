@@ -15,11 +15,6 @@ layout: wiki
 {: toc}
 
 
-## Contents
-{:.no_toc}
-* 
-{: toc}
-
 
 
 ```python
@@ -27,9 +22,11 @@ layout: wiki
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+print("Setup Finished")
 ```
 
 
+    Setup Finished
 
 
 ## The idea
@@ -135,12 +132,12 @@ plt.legend()
 
 
 
-    <matplotlib.legend.Legend at 0x109fe0940>
+    <matplotlib.legend.Legend at 0x10c158390>
 
 
 
 
-![png](inversetransform_files/inversetransform_5_1.png)
+![png](inversetransform_files/inversetransform_4_1.png)
 
 
 ### Box-Muller algorithm

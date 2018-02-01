@@ -15,11 +15,6 @@ layout: wiki
 {: toc}
 
 
-## Contents
-{:.no_toc}
-* 
-{: toc}
-
 
 
 ```python
@@ -27,9 +22,11 @@ layout: wiki
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+print("Finished Setup")
 ```
 
 
+    Finished Setup
 
 
 The key idea in stratification is to split the domain on which we wish to calculate an expectation or integral into strata. Then, on each of these strata, we calculate the sub-integral as an expectation separately, using whatever method is appropriate for the stratum, and which gives us the lowest variance. These expectations are then combined together to get the final value.
@@ -171,15 +168,15 @@ for k in np.arange(0,N):
     U = np.random.uniform(low=Umin, high=Umax, size=N)
     Imc[k] = (Umax-Umin)* np.mean(Y(U))
 
-    #stratisfied it in Ns regions
-    step = (Umax-Umin )/M
+    #stratified it in Ns regions
+    step = (Umax-Umin )/Ns
     Umin = 0 
     Umax = step
     Ii = 0
     
     
-    for reg in np.arange(0,M):
-        x = np.random.uniform(low=Umin, high=Umax, size=1.0*N/Ns);
+    for reg in np.arange(0,Ns):
+        x = np.random.uniform(low=Umin, high=Umax, size=N//Ns);
         Ii = Ii+(Umax-Umin)* np.mean(Y(x))
         Umin = Umin + step
         Umax = Umin + step
@@ -196,16 +193,13 @@ plt.legend()
 ```
 
 
-    //anaconda/envs/py35/lib/python3.5/site-packages/ipykernel/__main__.py:37: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
+
+
+
+    <matplotlib.legend.Legend at 0x111b00cf8>
 
 
 
 
-
-    <matplotlib.legend.Legend at 0x1191ab860>
-
-
-
-
-![png](stratification_files/stratification_11_2.png)
+![png](stratification_files/stratification_10_1.png)
 

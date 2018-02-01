@@ -8,3 +8,4 @@ layout: "default"
 - [Lecture 2](lecture2.html): Probability, Distributions, and Frequentism
 - [lab 1](lab1.html): Lab 1
 - [Lecture 3](lecture3.html): Expectations, the laws, and Monte Carlo
+- [Lecture 4](lecture4.html): Sampling

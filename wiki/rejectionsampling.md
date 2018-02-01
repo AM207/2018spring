@@ -15,11 +15,6 @@ layout: wiki
 {: toc}
 
 
-## Contents
-{:.no_toc}
-* 
-{: toc}
-
 
 
 ```python
@@ -27,7 +22,11 @@ layout: wiki
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+print("Setup Finished")
 ```
+
+
+    Setup Finished
 
 
 ## Basic Rejection Sampling
@@ -107,23 +106,16 @@ xvals=np.linspace(xmin, xmax, 1000)
 plt.plot(xvals, hinfo[0][0]*P(xvals), 'r', label=u'P(x)')
 
 # turn on the legend
-plt.legend()
+plt.legend();
 
 ```
 
 
-    Count 100294 Accepted 10000
+    Count 99359 Accepted 10000
 
 
 
-
-
-    <matplotlib.legend.Legend at 0x114063908>
-
-
-
-
-![png](rejectionsampling_files/rejectionsampling_4_2.png)
+![png](rejectionsampling_files/rejectionsampling_3_1.png)
 
 
 Notice that $y_{max}$ was just assumed here. In general we might have to do a maximization. This has a cost. We want to keep this cost low, or we might be spending some time there. If the optimization is complex, it might be cheaper to  do something else...
@@ -223,28 +215,14 @@ plt.plot(xvals, hinfo[0][0]*g(xvals), 'k', label=u'g(x)')
 
 
 # turn on the legend
-plt.legend()
+plt.legend();
 
 ```
 
 
-    Count 24359 Accepted 10000
+    Count 23692 Accepted 10000
 
 
 
-
-
-    <matplotlib.legend.Legend at 0x11748c2b0>
-
-
-
-
-![png](rejectionsampling_files/rejectionsampling_7_2.png)
-
-
-
-
-```python
-
-```
+![png](rejectionsampling_files/rejectionsampling_6_1.png)
 

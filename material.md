@@ -40,3 +40,7 @@ Lab1: **Frequentism**
 Lecture 3: **Law of Large Numbers, CLT, and Monte Carlo**
 
 [Slides, Notes and Readings](lectures/lecture3.html)
+
+Lecture 4: **Sampling**
+
+[Slides, Notes and Readings](lectures/lecture4.html)
