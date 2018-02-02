@@ -62,7 +62,7 @@ print(c1, c1.real)
 ```
 
 
-    <__main__.ComplexClass object at 0x1072d9780> 1
+    <__main__.ComplexClass object at 0x1073d9ba8> 1
 
 
 
@@ -87,7 +87,7 @@ print(c1, c1.real, c1.imaginary)
 ```
 
 
-    <__main__.ComplexClass object at 0x1072d9780> 5 2
+    <__main__.ComplexClass object at 0x1073d9ba8> 5 2
 
 
 ### Inheritance and Polymorphism
@@ -141,13 +141,13 @@ a0.make_sound()
 
     NotImplementedError                       Traceback (most recent call last)
 
-    <ipython-input-7-18721729352b> in <module>()
+    <ipython-input-20-18721729352b> in <module>()
           1 a0 = Animal("Rahul")
           2 print(a0.name)
     ----> 3 a0.make_sound()
     
 
-    <ipython-input-6-57b210a55e9d> in make_sound(self)
+    <ipython-input-19-57b210a55e9d> in make_sound(self)
           5 
           6     def make_sound(self):
     ----> 7         raise NotImplementedError
@@ -189,7 +189,7 @@ print(a1.make_sound, Dog.make_sound)
 ```
 
 
-    <bound method Dog.make_sound of <__main__.Dog object at 0x1073cfba8>> <function Dog.make_sound at 0x1072d7a60>
+    <bound method Dog.make_sound of <__main__.Dog object at 0x1073e6588>> <function Dog.make_sound at 0x1073d3bf8>
 
 
 
@@ -218,7 +218,7 @@ Dog.make_sound()
 
     TypeError                                 Traceback (most recent call last)
 
-    <ipython-input-11-11ebae4e7564> in <module>()
+    <ipython-input-24-11ebae4e7564> in <module>()
     ----> 1 Dog.make_sound()
     
 
@@ -415,7 +415,7 @@ print(A==B, B==C, A==C)
 ```
 
 
-    4389006696 4389006976 4389004344
+    4416444736 4416444848 4416445856
     False False True
 
 
@@ -432,99 +432,6 @@ The special "dunder" methods we talk about are invoked by the python interpreter
 A **sequence**, for example,  must implement `__len__` and `__getitem__`. Thats it.
 
 The original reference for this data mode is: https://docs.python.org/3/reference/datamodel.html .
-
-#### A Custom Sequence
-
-We now wish to create a `FrenchDeck` as an example of something that follows Python's Sequence protocol. Remember, the sequence protocol requires implementation of two methods: `__len__` and `__getitem__`. Thats it.
-
-
-
-```python
-class FrenchDeck:
-    ranks = [str(n) for n in range(2,11)] + list('JKQA')
-    suits="spade diamond club heart".split()
-    
-    def __init__(self):
-        #composition: there are items IN this class that constutute its structure
-        #delegation: the storage for this class is DELEGATED to this list below
-        self._cards = [Card(rank, suit) for suit in self.suits for rank in self.ranks]
-        
-    def __len__(self):
-        return len(self._cards)
-    
-    def __getitem__(self, position):
-        return self._cards[position]
-```
-
-
-
-
-```python
-deck = FrenchDeck()
-len(deck)
-```
-
-
-
-
-
-    52
-
-
-
-
-
-```python
-deck[0], deck[-1], deck[3]
-```
-
-
-
-
-
-    (Card(rank='2', suit='spade'),
-     Card(rank='A', suit='heart'),
-     Card(rank='5', suit='spade'))
-
-
-
-
-
-```python
-deck[10:18]
-```
-
-
-
-
-
-    [Card(rank='K', suit='spade'),
-     Card(rank='Q', suit='spade'),
-     Card(rank='A', suit='spade'),
-     Card(rank='2', suit='diamond'),
-     Card(rank='3', suit='diamond'),
-     Card(rank='4', suit='diamond'),
-     Card(rank='5', suit='diamond'),
-     Card(rank='6', suit='diamond')]
-
-
-
-Because we support the sequence protocol, you can use, in python, dunctions like `random.choice` DIRECTLY on instances of `FrenchDeck`. This is the power of interfaces and the data model.
-
-
-
-```python
-from random import choice
-choice(deck)
-```
-
-
-
-
-
-    Card(rank='6', suit='diamond')
-
-
 
 ### Building out our class: instances and classmethods
 
