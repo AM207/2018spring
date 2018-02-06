@@ -10,3 +10,4 @@ layout: "default"
 - [Lecture 3](lecture3.html): Expectations, the laws, and Monte Carlo
 - [Lecture 4](lecture4.html): Sampling
 - [lab 2](lab2.html): Python, Math, and Stratification
+- [Lecture 5](lecture5.html): Machine Learning

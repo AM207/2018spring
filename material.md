@@ -48,3 +48,10 @@ Lecture 4: **Sampling**
 Lab2: **Python, Math, and Stratification**
 
 [Material](lectures/lab2.html)
+
+
+---
+
+Lecture 5: **Machine Learning**
+
+[Slides, Notes and Readings](lectures/lecture5.html)

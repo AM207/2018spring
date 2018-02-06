@@ -112,7 +112,7 @@ for reg in np.arange(0,Ns):
     Umin = Umin + step
     Umax = Umin + step
 nums = np.ceil(N*sigmas/np.sum(sigmas)).astype(int)
-print(sigmas, nums)
+print(sigmas, nums, np.sum(nums))
     
 for k in np.arange(0,Nrep):
     # First lets do it with mean MC method 
@@ -148,11 +148,18 @@ print(np.std(Imc), np.std(Is), np.std(Is2))
 ```
 
 
-    [ 0.14107667  0.03162259  0.02940649  0.01900292  0.01271643  0.00895477
-      0.00630853  0.00543713  0.00386624  0.00336021] [5390 1209 1124  726  486  343  242  208  148  129]
-    0.0125753143692 0.00513272712475 0.00266425558846
+    [ 0.16531214  0.03284132  0.0292761   0.01743354  0.01195081  0.00838309
+      0.00645184  0.00485085  0.0036279   0.00303405] [5839 1160 1034  616  423  297  228  172  129  108] 10006
+    0.012575540594 0.00507214579121 0.002644516884
 
 
 
 ![png](stratlab_files/stratlab_7_1.png)
+
+
+
+
+```python
+
+```
 
