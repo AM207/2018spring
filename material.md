@@ -55,3 +55,7 @@ Lab2: **Python, Math, and Stratification**
 Lecture 5: **Machine Learning**
 
 [Slides, Notes and Readings](lectures/lecture5.html)
+
+Lecture 6: **Machine Learning, contd, Gradient Descent**
+
+[Slides, Notes and Readings](lectures/lecture6.html)

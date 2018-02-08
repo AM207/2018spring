@@ -11,3 +11,4 @@ layout: "default"
 - [Lecture 4](lecture4.html): Sampling
 - [lab 2](lab2.html): Python, Math, and Stratification
 - [Lecture 5](lecture5.html): Machine Learning
+- [Lecture 6](lecture6.html): Gradient Descent
