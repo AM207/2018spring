@@ -59,3 +59,7 @@ Lecture 5: **Machine Learning**
 Lecture 6: **Machine Learning, contd, Gradient Descent**
 
 [Slides, Notes and Readings](lectures/lecture6.html)
+
+Lab3: **PyTorch, Regressions, and Artificial Neural Networks**
+
+[Material](lectures/lab3.html)

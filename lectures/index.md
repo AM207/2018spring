@@ -12,3 +12,4 @@ layout: "default"
 - [lab 2](lab2.html): Python, Math, and Stratification
 - [Lecture 5](lecture5.html): Machine Learning
 - [Lecture 6](lecture6.html): Gradient Descent
+- [lab 3](lab3.html): PyTorch, Regressions, and Artificial Neural Networks
