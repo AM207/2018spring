@@ -52,6 +52,8 @@ Lab2: **Python, Math, and Stratification**
 
 ---
 
+### Week 3
+
 Lecture 5: **Machine Learning**
 
 [Slides, Notes and Readings](lectures/lecture5.html)
@@ -63,3 +65,11 @@ Lecture 6: **Machine Learning, contd, Gradient Descent**
 Lab3: **PyTorch, Regressions, and Artificial Neural Networks**
 
 [Material](lectures/lab3.html)
+
+---
+
+### Week 4
+
+Lecture 7: **Machine Learning and Backpropagation**
+
+[Slides, Notes and Readings](lectures/lecture7.html)
