@@ -14,3 +14,4 @@ layout: "default"
 - [Lecture 6](lecture6.html): Gradient Descent
 - [lab 3](lab3.html): PyTorch, Regressions, and Artificial Neural Networks
 - [Lecture 7](lecture7.html): Machine Learning and Backpropagation
+- [Lecture 8](lecture8.html): Neural Nets and Information Theory
