@@ -78,3 +78,7 @@ Lecture 7: **Machine Learning and Backpropagation**
 Lecture 8: **Neural Nets and Information Theory**
 
 [Slides, Notes and Readings](lectures/lecture8.html)
+
+Lab4: **PyTorch and Artificial Neural Networks contd**
+
+[Material](lectures/lab4.html)

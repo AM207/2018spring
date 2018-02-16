@@ -12,7 +12,7 @@ noline: 1
 
 ## Notes
 
-- [Universal Approximation from Neural Nets](../wiki/FuncTorch.html)
+- [Universal Approximation from Neural Nets](../wiki/functorch.html)
 - [Jensen's Inequality](../wiki/jensens.html) about convex functions
 - [Entropy](../wiki/Entropy.html)
 - [Divergence and Deviance](../wiki/Divergence.html)
