@@ -40,6 +40,44 @@ from torch.utils.data.sampler import SubsetRandomSampler
 
 We'll start by defining a dataset not too disimilar to MNIST but a lot simpler.  We replace our (28, 28, 1) ndarrays with (2, 2, 1) versions.  We also implement the ability to handle transforms just so our class fits in with the MNIST-like Dataset/DataLoader scaffolding in torch/torchvision.
 
+
+
+```python
+class MyCustomPixelDataset(Dataset):
+    """
+    This dataset is a toy dataset that acts like 2x2 version of MNIST
+    with the trace as labels.
+    """
+    def __init__(self, size=1, transform=None):
+        super(MyCustomPixelDataset, self).__init__()
+        
+        # size determines length of dataset
+        self.size = size
+        
+        # generate random 2x2 matrices with values in [0, 255]
+        self.matrices = [np.random.randint(256, size=(2, 2)) for i in range(self.size)]
+        
+        # our dataset will be a list of (ndarray, label) tuples where the label is the trace
+        # reshape our matrices into (2x2x1) ndarrays so that transforms.ToTensor()
+        # has the appropriate expected shape
+        self.matrices = [(np.reshape(np.array([matrix]), (2,2,1)), np.trace(matrix)) for matrix in self.matrices]
+        
+        # if we're passed a transform then apply it to the first element of our tuple (the input)
+        if transform:
+            self.matrices = [(transform(element[0]), element[1]) for element in self.matrices]
+        
+    # length should just be the size although we don't validate size (i.e. should be an int > 0)
+    def __len__(self):
+        return self.size
+    
+    # implement __getitem__ as the indexed tuple 
+    def __getitem__(self, index):
+        #assert 0 <= index <= self.b - self.a
+        
+        return self.matrices[index]
+```
+
+
 **If we look at an example small instance of our dataset, we see that it correctly handles the transforms.ToTensor() operation and matches the structure of the MNIST dataset although we have scalar labels as the trace of the original random 2x2 matrix**
 
 
@@ -200,7 +238,12 @@ num_train = len(mydset)
 indices = list(range(num_train))
 split = 4
 
-train_idx, validation_idx = indices[split:], indices[:split]
+# Random, non-contiguous split
+validation_idx = np.random.choice(indices, size=split, replace=False)
+train_idx = list(set(indices) - set(validation_idx))
+
+# Contiguous split
+# train_idx, validation_idx = indices[split:], indices[:split]
 
 ## define our samplers -- we use a SubsetRandomSampler because it will return
 ## a random subset of the split defined by the given indices without replaf
@@ -237,31 +280,31 @@ for epoch in range(2):
 
 
     0 0 
-     233
-     329
-     312
+     163
      334
+     136
+     219
     [torch.LongTensor of size 4]
     
     0 1 
-     219
+     243
+     329
      370
-     286
-     439
+     312
     [torch.LongTensor of size 4]
     
     1 0 
      329
-     233
-     439
      334
+     163
+     243
     [torch.LongTensor of size 4]
     
     1 1 
-     312
-     286
-     219
      370
+     136
+     312
+     219
     [torch.LongTensor of size 4]
     
 
@@ -278,23 +321,23 @@ for epoch in range(2):
 
 
     0 0 
-     163
+     233
      191
     [torch.LongTensor of size 2]
     
     0 1 
-     136
-     243
+     439
+     286
     [torch.LongTensor of size 2]
     
     1 0 
-     163
-     136
+     191
+     233
     [torch.LongTensor of size 2]
     
     1 1 
-     191
-     243
+     286
+     439
     [torch.LongTensor of size 2]
     
 
@@ -333,8 +376,13 @@ split = 10000 # define the split size
 # Define your batch_size
 batch_size = 64
 
-# Construct the indices for the training and validation set
-train_idx, validation_idx = indices[split:], indices[:split]
+# Random, non-contiguous split
+validation_idx = np.random.choice(indices, size=split, replace=False)
+train_idx = list(set(indices) - set(validation_idx))
+
+# Contiguous split
+# train_idx, validation_idx = indices[split:], indices[:split]
+
 
 # define our samplers -- we use a SubsetRandomSampler because it will return
 # a random subset of the split defined by the given indices without replacement
@@ -383,6 +431,13 @@ YouTubeVideo('iguPncD11bI')
         ></iframe>
         
 
+
+
+
+
+```python
+
+```
 
 
 
