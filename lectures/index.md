@@ -16,3 +16,4 @@ layout: "default"
 - [Lecture 7](lecture7.html): Machine Learning and Backpropagation
 - [Lecture 8](lecture8.html): Neural Nets and Information Theory
 - [lab 4](lab4.html): PyTorch and Artificial Neural Networks(contd)
+- [Lecture 8](lecture8.html): Information Theory, Deviance, and Global Optimization

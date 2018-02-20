@@ -82,3 +82,11 @@ Lecture 8: **Neural Nets and Information Theory**
 Lab4: **PyTorch and Artificial Neural Networks contd**
 
 [Material](lectures/lab4.html)
+
+---
+
+### Week 5
+
+Lecture 9: **Information Theory, Deviance, and Global Optimization**
+
+[Slides, Notes and Readings](lectures/lecture9.html)
