@@ -10,9 +10,7 @@ noline: 1
 
 **TFs:**
 
-Patrick Ohiomoba, Will Claybaugh
-
-More to come.
+Patrick Ohiomoba, Will Claybaugh, Peter Chang, Gal Koplewitz
 
 ## When?
 
@@ -28,10 +26,10 @@ Always in B125, Maxwell Dworkin.
 
 - anytime by appointment with any of us.
 - Rahul: Tue and Thu 1.30pm to 2.30pm. ONLINE Thu 2.30-3.30pm.
-- Will Tuesday 4 - 5 pm 
+- Will Tuesday 4 - 5 pm
 - Wed Patrick and TBD 4 - 7:30
 - 6:30 - 7:30 pm Wednesday will be online
-- Thu Patrick 4-5:30, Peter 5:30 - 6:30
+- Thu Patrick 4.30-5:30, Peter 5:30 - 6:30, Gal 6.30-7.30
 
 
 ## Online?
