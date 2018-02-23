@@ -5,4 +5,4 @@ layout: "default"
 noline: 1
 ---
 
-- [lab 5](../wiki/lab4.html)
+- [lab 5](../wiki/lab5.html)
