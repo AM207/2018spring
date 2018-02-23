@@ -94,3 +94,7 @@ Lecture 9: **Information Theory, Deviance, and Global Optimization**
 Lecture 10: **Annealing, Markov, and Metropolis**
 
 [Slides, Notes and Readings](lectures/lecture10.html)
+
+Lab5: **Simulated Annealing and the TSP**
+
+[Material](lectures/lab5.html)
