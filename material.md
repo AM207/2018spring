@@ -98,3 +98,11 @@ Lecture 10: **Annealing, Markov, and Metropolis**
 Lab5: **Simulated Annealing and the TSP**
 
 [Material](lectures/lab5.html)
+
+---
+
+### Week 6
+
+Lecture 11: **Metropolis To Bayes**
+
+[Slides, Notes and Readings](lectures/lecture11.html)
