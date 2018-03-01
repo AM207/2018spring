@@ -20,3 +20,4 @@ layout: "default"
 - [Lecture 10](lecture10.html): Annealing, Markov, and Metropolis
 - [lab 5](lab5.html): Simulated Annealing
 - [Lecture 11](lecture11.html): Metropolis To Bayes
+- [Lecture 12](lecture12.html): Bayes

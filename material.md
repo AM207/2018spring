@@ -106,3 +106,7 @@ Lab5: **Simulated Annealing and the TSP**
 Lecture 11: **Metropolis To Bayes**
 
 [Slides, Notes and Readings](lectures/lecture11.html)
+
+Lecture 12: **Bayes**
+
+[Slides, Notes and Readings](lectures/lecture12.html)
