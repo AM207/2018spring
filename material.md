@@ -110,3 +110,7 @@ Lecture 11: **Metropolis To Bayes**
 Lecture 12: **Bayes**
 
 [Slides, Notes and Readings](lectures/lecture12.html)
+
+Lab 6: **Sampling and Pymc3**
+
+[Material](lectures/lab6.html)

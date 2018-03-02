@@ -21,3 +21,4 @@ layout: "default"
 - [lab 5](lab5.html): Simulated Annealing
 - [Lecture 11](lecture11.html): Metropolis To Bayes
 - [Lecture 12](lecture12.html): Bayes
+- [lab 6](lab6.html): Sampling and Bayes
