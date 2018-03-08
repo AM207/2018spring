@@ -23,3 +23,4 @@ layout: "default"
 - [Lecture 12](lecture12.html): Bayes
 - [lab 6](lab6.html): Sampling and Bayes
 - [Lecture 13](lecture13.html): Bayes
+- [Lecture 14](lecture14.html): Convergence and Gibbs
