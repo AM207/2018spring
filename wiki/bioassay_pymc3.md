@@ -34,14 +34,13 @@ $\newcommand{\Gam}[1]{\mathrm{Gamma}#1}$
 
 
 
-
 ```python
 %matplotlib inline
 import numpy as np
 from scipy import stats
 from scipy.stats import norm
 import matplotlib.pyplot as plt
-import seaborn as sns
+import seaborn.apionly as sns
 sns.set_style('white')
 sns.set_context('paper')
 import pandas as pd
@@ -54,7 +53,7 @@ import time
 
 # A few words about PyMC3
 
-PyMC3 is an open source probabilistic programming tool that uses a very natural syntax. It features state-of-the-art MCMC sampling methods such as the No-U-Turn-Sampler (NUTS) and Hamiltonian Monte Carlo (HMC). PyMC3 uses Theano to perform authomatic differentiation, which makes it very efficient in calculating the gradients used in these methods. In this lab we will be using PyMC3 to make inference the bioassay experiment. We blatantly steal some text and ideas from fonnesbeck's notebooks for bioinformatics. We also use material from the PyMC3 official tutorials: http://pymc-devs.github.io/pymc3/notebooks/getting_started.html
+PyMC3 is an open source probabilistic programming tool that uses a very natural syntax. It features state-of-the-art MCMC sampling methods such as the No-U-Turn-Sampler (NUTS) and Hamiltonian Monte Carlo (HMC). PyMC3 uses Theano to perform authomatic differentiation, which makes it very efficient in calculating the gradients used in these methods. In this lab we will be using PyMC3 to make inference for the bioassay experiment.  We blatantly steal some text and ideas from fonnesbeck's notebooks for bioinformatics. We also use material from the PyMC3 official tutorials: http://pymc-devs.github.io/pymc3/notebooks/getting_started.html
 
 The idea behind PyMC3 is to make Bayesian inference and sampling as simple as possible. Some of the features of PyMC3 are:
 
@@ -163,7 +162,7 @@ plt.legend(loc=4)
 
 
 
-    <matplotlib.legend.Legend at 0x111a224e0>
+    <matplotlib.legend.Legend at 0x11a43ab00>
 
 
 
@@ -204,7 +203,7 @@ plt.colorbar()
 
 
 
-    <matplotlib.colorbar.Colorbar at 0x111cae780>
+    <matplotlib.colorbar.Colorbar at 0x11a6c9cf8>
 
 
 
@@ -236,7 +235,7 @@ with Model() as bioassay_model:
 ```
 
 
-At the model-specification stage (before the data are observed), $\alpha$, $\beta$, $\theta$, and $y$ (the observed number of deaths) are all random variables. 
+At the model-specification stage (before the data are observed), $\alpha$, $\beta$, $\theta$, and $y$ (the observed number of deaths) are all random variables. Bayesian "random" variables have not necessarily arisen from a physical random process. 
 
 The only deterministic variable in this model is $\theta$. If we knew the values of $\theta$'s parents ($\alpha$ and $\beta$), we could compute the value of $\theta$ exactly. A deterministic like $\theta$ is defined by a mathematical function that returns its value given values for its parents. On the other hand, even if the values of the parents of variables $\alpha$, $\beta$ and $y$ (before observing the data) were known, we would still be uncertain of their values. These variables are stochastic, characterized by probability distributions that express how plausible their candidate values are, given values for their parents.
 
@@ -258,7 +257,7 @@ print(map_estimate)
 ```
 
 
-    logp = -13.034, ||grad|| = 0.00043389: 100%|██████████| 14/14 [00:00<00:00, 99.51it/s]  
+    logp = -13.034, ||grad|| = 0.00043389: 100%|██████████| 14/14 [00:00<00:00, 116.68it/s] 
 
 
     {'alpha': array(0.8437566864565978), 'beta': array(7.730204614414374)}
@@ -279,7 +278,7 @@ print(map_estimate)
 ```
 
 
-    logp = -13.107:   2%|▏         | 79/5000 [00:00<00:04, 1008.75it/s]
+    logp = -13.107:   2%|▏         | 79/5000 [00:00<00:02, 2233.22it/s]
 
     Optimization terminated successfully.
              Current function value: 13.033671
@@ -292,8 +291,6 @@ print(map_estimate)
 
 
 In Powell's method we move along one orthogonal base direction at at time, needing to minimize only in one dimension, using methods that do not require a derivative to be calculated.
-
-![](images/powell.png)
 
 ### Sampling
 
@@ -321,12 +318,12 @@ with bioassay_model:
 ```
 
 
-    logp = -13.034, ||grad|| = 0.00043389: 100%|██████████| 14/14 [00:00<00:00, 517.62it/s]   
+    logp = -13.034, ||grad|| = 0.00043389: 100%|██████████| 14/14 [00:00<00:00, 1820.33it/s]  
     Multiprocess sampling (2 chains in 2 jobs)
     CompoundStep
     >Metropolis: [beta]
     >Metropolis: [alpha]
-    100%|██████████| 50500/50500 [00:27<00:00, 1816.59it/s]
+    100%|██████████| 50500/50500 [00:14<00:00, 3583.68it/s]
     The number of effective samples is smaller than 10% for some parameters.
 
 
@@ -349,28 +346,6 @@ tr1 = bioassay_trace[25000:]
 ![png](bioassay_pymc3_files/bioassay_pymc3_26_0.png)
 
 
-
-
-```python
-from pymc3 import autocorrplot
-autocorrplot(tr1)
-```
-
-
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x11290f710>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x11281aeb8>],
-           [<matplotlib.axes._subplots.AxesSubplot object at 0x1124ac278>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x1125b3550>]], dtype=object)
-
-
-
-
-![png](bioassay_pymc3_files/bioassay_pymc3_27_1.png)
-
-
 We can also plot the 2D posterior and compare with the analytical plot above.
 
 
@@ -385,12 +360,12 @@ plt.ylabel(r"$\beta$",size=20)
 
 
 
-    <matplotlib.text.Text at 0x116824128>
+    <matplotlib.text.Text at 0x11e92c780>
 
 
 
 
-![png](bioassay_pymc3_files/bioassay_pymc3_29_1.png)
+![png](bioassay_pymc3_files/bioassay_pymc3_28_1.png)
 
 
 We can print a summary for our variables:
@@ -437,28 +412,52 @@ summary(tr1, varnames=['alpha', 'beta'])
   <tbody>
     <tr>
       <th>alpha</th>
-      <td>1.322962</td>
-      <td>1.111251</td>
-      <td>0.018051</td>
-      <td>-0.731014</td>
-      <td>3.570176</td>
-      <td>3852.0</td>
-      <td>1.000150</td>
+      <td>1.309900</td>
+      <td>1.086593</td>
+      <td>0.016202</td>
+      <td>-0.821303</td>
+      <td>3.40299</td>
+      <td>3967.0</td>
+      <td>0.999980</td>
     </tr>
     <tr>
       <th>beta</th>
-      <td>11.728286</td>
-      <td>5.851554</td>
-      <td>0.093292</td>
-      <td>2.474921</td>
-      <td>23.219954</td>
-      <td>3557.0</td>
-      <td>1.000131</td>
+      <td>11.585306</td>
+      <td>5.742244</td>
+      <td>0.093417</td>
+      <td>2.642882</td>
+      <td>23.06583</td>
+      <td>3659.0</td>
+      <td>0.999983</td>
     </tr>
   </tbody>
 </table>
 </div>
 
+
+
+And look for autocorrelations
+
+
+
+```python
+from pymc3 import autocorrplot
+autocorrplot(tr1)
+```
+
+
+
+
+
+    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x11b71c8d0>,
+            <matplotlib.axes._subplots.AxesSubplot object at 0x11f7df390>],
+           [<matplotlib.axes._subplots.AxesSubplot object at 0x120ab9c18>,
+            <matplotlib.axes._subplots.AxesSubplot object at 0x12056a5c0>]], dtype=object)
+
+
+
+
+![png](bioassay_pymc3_files/bioassay_pymc3_32_1.png)
 
 
 ## Model checking
@@ -474,18 +473,18 @@ An informal approach involves plotting a histogram for every set of $k$ iteratio
 
 
 ```python
-beta_trace = bioassay_trace['beta'][25000:]
+beta_trace = bioassay_trace['beta']
 
-fig, axes = plt.subplots(1, 5, figsize=(14,6))
+fig, axes = plt.subplots(2, 5, figsize=(14,6))
 axes = axes.ravel()
-for i in range(5):
+for i in range(10):
     axes[i].hist(beta_trace[500*i:500*(i+1)])
 plt.tight_layout()
 ```
 
 
 
-![png](bioassay_pymc3_files/bioassay_pymc3_33_0.png)
+![png](bioassay_pymc3_files/bioassay_pymc3_34_0.png)
 
 
 Another *ad hoc* method to detect lack of convergence involves plotting the traces of chains initialized with different starting conditions. We can run more than one chain using the argument ```njobs``` of the  ```sample``` function. If convergence has occurred, we would expect the two chains to converge to the same value, and to have approximately the same variance. This convergence to the same equilibrium state is what we call *ergodicity*, but its fullfilment it is not guaranteed by these heuristic methods, since the chain can be in a state of *metastability* and reian there for a large number of iterations before moving to a more stable state.
@@ -495,7 +494,7 @@ Another *ad hoc* method to detect lack of convergence involves plotting the trac
 ```python
 with bioassay_model:
     step = pm.Metropolis()
-    bioassay_trace1 = sample(50000, step=step, njobs=4, start=[{'alpha':0.5}, {'alpha':5}, {'alpha':1.5}, {'alpha':3}])
+    bioassay_trace1 = sample(50000, njobs=4, step=step, start=[{'alpha':0.5}, {'alpha':5}, {'alpha':1.5}, {'alpha':3}])
 ```
 
 
@@ -503,36 +502,21 @@ with bioassay_model:
     CompoundStep
     >Metropolis: [beta]
     >Metropolis: [alpha]
-    100%|██████████| 50500/50500 [00:48<00:00, 1033.33it/s]
+    100%|██████████| 50500/50500 [00:25<00:00, 1956.08it/s]
     The number of effective samples is smaller than 10% for some parameters.
 
 
 
 
 ```python
-bioassay_trace1.get_values('alpha', chains=0)[0]
+pm.effective_n(bioassay_trace1)
 ```
 
 
 
 
 
-    0.64718323917200782
-
-
-
-
-
-```python
-np.array(range(100))[:20]
-```
-
-
-
-
-
-    array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
-           17, 18, 19])
+    {'alpha': 15792.0, 'beta': 14255.0}
 
 
 
@@ -542,27 +526,131 @@ np.array(range(100))[:20]
 plt.hist(bioassay_trace1.get_values('alpha', chains=0)[25000:], histtype="step", bins=20)
 plt.hist(bioassay_trace1.get_values('alpha', chains=1)[25000:], histtype="step", bins=20)
 plt.hist(bioassay_trace1.get_values('alpha', chains=2)[25000:], histtype="step", bins=20)
-plt.hist(bioassay_trace1.get_values('alpha', chains=3)[25000:], histtype="step", bins=20)
+plt.hist(bioassay_trace1.get_values('alpha', chains=3)[25000:], histtype="step", bins=20);
+```
+
+
+
+![png](bioassay_pymc3_files/bioassay_pymc3_38_0.png)
+
+
+### Formal methods
+
+### 1. Geweke
+
+The Geweke test (Geweke, 1992) is a time-series approach that compares the mean and variance of segments from the beginning and end of a single chain.
+
+$$z = \frac{\bar{\theta}_a - \bar{\theta}_b}{\sqrt{Var(\theta_a)+Var(\theta_B)}}$$
+
+where $a$ is the early interval and $b$ the late interval. If the z-scores (theoretically distributed as standard normal variates) of these two segments are similar, it can provide evidence for convergence. PyMC calculates z-scores of the difference between various initial segments along the chain, and the last 50% of the remaining chain. If the chain has converged, the majority of points should fall within 2 standard deviations of zero.
+In PyMC, diagnostic z-scores can be obtained by calling the *geweke* function. It accepts either (1) a single trace, (2) a Node or Stochastic object, or (4) an entire Model object:
+
+
+
+```python
+from pymc3 import geweke
+    
+z = geweke(tr1, intervals=15)
+```
+
+
+
+
+```python
+plt.scatter(*z[0]['alpha'].T)
+plt.hlines([-1,1], 0, 13000, linestyles='dotted')
+plt.xlim(0, 13000)
 ```
 
 
 
 
 
-    (array([    8.,    36.,   153.,   464.,  1320.,  2317.,  3116.,  4194.,
-             3963.,  3218.,  2476.,  1475.,   933.,   576.,   351.,   201.,
-               86.,    62.,    36.,    15.]),
-     array([-2.31056645, -1.88523499, -1.45990353, -1.03457207, -0.60924061,
-            -0.18390915,  0.24142231,  0.66675377,  1.09208523,  1.51741669,
-             1.94274814,  2.3680796 ,  2.79341106,  3.21874252,  3.64407398,
-             4.06940544,  4.4947369 ,  4.92006836,  5.34539982,  5.77073128,
-             6.19606274]),
-     <a list of 1 Patch objects>)
+    (0, 13000)
 
 
 
 
-![png](bioassay_pymc3_files/bioassay_pymc3_38_1.png)
+![png](bioassay_pymc3_files/bioassay_pymc3_41_1.png)
+
+
+
+
+```python
+plt.scatter(*z[1]['alpha'].T)
+plt.hlines([-1,1], 0, 13000, linestyles='dotted')
+plt.xlim(0, 13000)
+```
+
+
+
+
+
+    (0, 13000)
+
+
+
+
+![png](bioassay_pymc3_files/bioassay_pymc3_42_1.png)
+
+
+### 2. Gelman-Rubin
+
+This diagnostic uses multiple chains to check for lack of convergence, and is based on the notion that if multiple chains have converged, by definition they should appear very similar to one another; if not, one or more of the chains has failed to converge.
+The Gelman-Rubin diagnostic uses an analysis of variance approach to assessing convergence. That is, it calculates both the between-chain varaince (B) and within-chain varaince (W), and assesses whether they are different enough to worry about convergence. Assuming $m$ chains, each of length $n$, quantities are calculated by:
+
+$$
+\begin{align}B = \frac{n}{m-1} \sum_{j=1}^m (\bar{\theta}_{.j} - \bar{\theta}_{..})^2 \\
+W = \frac{1}{m} \sum_{j=1}^m \left[ \frac{1}{n-1} \sum_{i=1}^n (\theta_{ij} - \bar{\theta}_{.j})^2 \right]
+\end{align}
+$$
+for each scalar estimand $\theta$. Using these values, an estimate of the marginal posterior variance of $\theta$ can be calculated:
+
+$$
+\hat{\text{Var}}(\theta | y) = \frac{n-1}{n} W + \frac{1}{n} B
+$$
+
+Assuming $\theta$ was initialized to arbitrary starting points in each chain, this quantity will overestimate the true marginal posterior variance. At the same time, $W$ will tend to underestimate the within-chain variance early in the sampling run. However, in the limit as $n \rightarrow 
+\infty$, both quantities will converge to the true variance of $\theta$. In light of this, the Gelman-Rubin statistic monitors convergence using the ratio:
+
+$$\hat{R} = \sqrt{\frac{\hat{\text{Var}}(\theta | y)}{W}}$$
+
+This is called the potential scale reduction, since it is an estimate of the potential reduction in the scale of $\theta$ as the number of simulations tends to infinity. In practice, we look for values of $\hat{R}$ close to one (say, less than 1.1) to be confident that a particular estimand has converged. In PyMC, the function gelman_rubin will calculate $\hat{R}$ for each stochastic node in the passed model:
+
+
+
+```python
+from pymc3 import gelman_rubin
+
+gelman_rubin(bioassay_trace1)
+```
+
+
+
+
+
+    {'alpha': 1.0001396613551423, 'beta': 1.0001433985689452}
+
+
+
+
+
+```python
+from pymc3 import forestplot
+
+forestplot(bioassay_trace1)
+```
+
+
+
+
+
+    <matplotlib.gridspec.GridSpec at 0x11f6220b8>
+
+
+
+
+![png](bioassay_pymc3_files/bioassay_pymc3_45_1.png)
 
 
 ### Goodness of fit: posterior predictive
@@ -587,7 +675,7 @@ with bioassay_model:
 ```
 
 
-    100%|██████████| 500/500 [00:02<00:00, 178.77it/s]
+    100%|██████████| 500/500 [00:00<00:00, 1786.86it/s]
 
 
 If the model fit is good, we would expect the observed true data to fall within a region of high probability of the posterior predictive distribution. Otherwise, if the fit is not so good, we would expect to see the observed true data in the tails if the posterior predictive. Let us plot and see:
@@ -604,10 +692,10 @@ for obs, sim, ax in zip(deaths, deaths_sim['obs_deaths'].T, axes):
 
 
 
-![png](bioassay_pymc3_files/bioassay_pymc3_42_0.png)
+![png](bioassay_pymc3_files/bioassay_pymc3_49_0.png)
 
 
-But of course, what we want is being able to predict new observations. We can create an array of new hypotetical doses:
+But of course, what we want is being able to predict new observations. We can create an array of new hypothetical doses:
 
 
 
@@ -616,17 +704,7 @@ log_dose_to_predict = np.random.uniform(-0.8,0.7,size=50)
 #log_dose_to_predict =  np.array([-0.5])
 log_dose_to_predict
 n_predict = n = 5 * np.ones(50, dtype=int)
-n_predict
 ```
-
-
-
-
-
-    array([5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-           5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-           5, 5, 5, 5])
-
 
 
 We now update the values of the shared variable we have created with the values for which we want to predict:
@@ -648,28 +726,14 @@ ppc = pm.sample_ppc(tr1, model=bioassay_model, samples=500)
 ```
 
 
-    100%|██████████| 500/500 [00:00<00:00, 1779.69it/s]
+    100%|██████████| 500/500 [00:00<00:00, 2511.72it/s]
 
 
 
 
 ```python
-ppc['obs_deaths'].shape
-```
-
-
-
-
-
-    (500, 50)
-
-
-
-
-
-```python
-plt.errorbar(x=log_dose_to_predict, y=np.asarray(ppc['obs_deaths']).mean(axis=0), yerr=np.asarray(ppc['obs_deaths']).std(axis=0), linestyle='', marker='o', alpha=0.5)
-plt.plot(log_dose, deaths, 'o',color='r')
+plt.errorbar(x=log_dose_to_predict, y=np.asarray(ppc['obs_deaths']).mean(axis=0), yerr=np.asarray(ppc['obs_deaths']).std(axis=0), linestyle='', marker='o')
+plt.plot(log_dose, deaths, 'o')
 plt.xlabel('log_dose',size=15)
 plt.ylabel('number of rats with tumors',size=15)
 ```
@@ -678,12 +742,12 @@ plt.ylabel('number of rats with tumors',size=15)
 
 
 
-    <matplotlib.text.Text at 0x112800358>
+    <matplotlib.text.Text at 0x11b153b38>
 
 
 
 
-![png](bioassay_pymc3_files/bioassay_pymc3_49_1.png)
+![png](bioassay_pymc3_files/bioassay_pymc3_55_1.png)
 
 
 The posterior predictives give us something nice: uncertainties in our predcictions.

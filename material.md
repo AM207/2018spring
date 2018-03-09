@@ -124,3 +124,7 @@ Lecture 13: **More Bayes**
 Lecture 14: **Convergence and Gibbs**
 
 [Slides, Notes and Readings](lectures/lecture14.html)
+
+Lab7: **Sampling and Hierarchicals**
+
+[Material](lectures/lab7.html)
