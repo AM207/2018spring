@@ -3,7 +3,7 @@ title: Lab7: Tumors in Rats
 shorttitle: tumorlab
 notebook: tumorlab.ipynb
 noline: 1
-summary: "A full bayesian treatment of the rat tumor hierarchical model, including a discussion on the choice of hyperprior, and posterior predictions for both an existing $\\theta_i$ and for a new $\\theta_{71}$."
+summary: "A full bayesian treatment of the rat tumor hierarchical model, including a discussion on the choice of hyperprior, and posterior predictions."
 keywords: ['rat tumors', 'mcmc', 'gibbs sampler', 'hierarchical', 'prior', 'noninformative prior', 'bayesian updating', 'bayesian', 'posterior', 'posterior predictive', 'beta', 'binomial', 'beta-binomial']
 layout: wiki
 ---
