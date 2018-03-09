@@ -5,3 +5,7 @@ layout: "lecture"
 noline: 1
 notes: ['tumorlab', 'tetchygibbs', 'bioassay_pymc3']
 ---
+
+## Hierarchicals
+
+- [Rat Tumors](../wiki/tumorlab.html)
