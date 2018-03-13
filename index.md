@@ -25,11 +25,10 @@ Fridays 11am - 12.30pm Lab. Compulsory to attend. Pierce 301.
 Always in B125, Maxwell Dworkin.
 
 - anytime by appointment with any of us.
-- Rahul: Tue and Thu 1.30pm to 2.30pm. ONLINE Thu 2.30-3.30pm.
-- Will Tuesday 4 - 5 pm
-- Wed Patrick and TBD 4 - 7:30
-- 6:30 - 7:30 pm Wednesday will be online
-- Thu Patrick 4.30-5:30, Peter 5:30 - 6:30, Gal 6.30-7.30
+- Rahul: Tue and Thu 1.30 - 2.30pm. ONLINE Thu 2.30 - 3.30pm.
+- Will Tuesday 4 - 5pm
+- Wed Patrick  4 - 7:30pm. ONLINE Wed 6:30 - 7:30pm
+- Thu Patrick 4.30 - 5:30pm, Peter 5:30 - 6:30pm
 
 
 ## Online?

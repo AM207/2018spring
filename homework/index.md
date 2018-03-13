@@ -10,3 +10,4 @@ layout: "default"
 - [Homework 4](AM207_HW4.html) Due Fri 23rd Feb 2018 at 11.00AM. [Data](HW3_data.csv).
 - [Homework 5](AM207_HW5.html) Due Fri 2nd Mar 2018 at 11.00AM. [Data](HW3_data.csv).
 - [Homework 6](AM207_HW6.html) Due Fri 9nd Mar 2018 at 11.00AM.
+- [Homework 7](AM207_HW7.html) Due Fri 23rd Mar 2018 at 11.00AM [Data](HW7_data.zip).
