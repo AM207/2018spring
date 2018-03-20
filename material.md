@@ -133,4 +133,4 @@ Lab7: **Sampling and Hierarchicals**
 
 Lecture 15: **Linear Regression**
 
-Slides, Notes and Readings](lectures/lecture15.html)
+[Slides, Notes and Readings](lectures/lecture15.html)
