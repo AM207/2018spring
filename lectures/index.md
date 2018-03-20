@@ -25,3 +25,4 @@ layout: "default"
 - [Lecture 13](lecture13.html): Bayes
 - [Lecture 14](lecture14.html): Convergence and Gibbs
 - [lab 7](lab7.html): Sampling and Hierarchical Models
+- [Lecture 15](lecture15.html): Linear Regression
