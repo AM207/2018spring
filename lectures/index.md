@@ -26,3 +26,4 @@ layout: "default"
 - [Lecture 14](lecture14.html): Convergence and Gibbs
 - [lab 7](lab7.html): Sampling and Hierarchical Models
 - [Lecture 15](lecture15.html): Linear Regression
+- [Lecture 16](lecture16.html): Gaussian Processes

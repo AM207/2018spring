@@ -134,3 +134,7 @@ Lab7: **Sampling and Hierarchicals**
 Lecture 15: **Linear Regression**
 
 [Slides, Notes and Readings](lectures/lecture15.html)
+
+Lecture 16: **Gaussian Processes**
+
+[Slides, Notes and Readings](lectures/lecture16.html)
