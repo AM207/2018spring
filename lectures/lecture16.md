@@ -3,7 +3,7 @@ shorttitle: "Lecture16"
 title: "Lecture 16: Gaussian Processes"
 layout: "lecture"
 noline: 1
-notes: ['GP1', 'GP2', 'gp3']
+notes: ['levelsofbayes', 'GP1', 'GP2', 'gp3']
 ---
 
 ## Slides
