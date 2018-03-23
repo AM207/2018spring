@@ -236,7 +236,6 @@ How did I pick specific curves from the prior?
 
 Assume that the data and the "prior data" come from a multivariate gaussian, using the MVN formulae from above
 
-
 **JOINT**:$$p(f,f^{\infty}) = \mathcal{N}\left(\left[{
 \begin{array}{c}
   {\mu_f}  \\
@@ -266,34 +265,40 @@ $$
 
 where: $$\,\,\,\,K = K(x, x); K_{\infty} = K(x, x^{\infty}); K_{\infty\infty} = K(x^{\infty}, x^{\infty})$$
 
----
 
-##KEY INSIGHT:
-##[fit]MARGINAL IS DECOUPLED
+**MARGINAL IS DECOUPLED**
 
 
 >*...for the marginal of a gaussian, only the covariance of the block of the matrix involving the unmarginalized dimensions matters! Thus "if you ask only for the properties of the function (you are fitting to the data) at a finite number of points, then inference in the Gaussian process will give you the same answer if you ignore the infinitely many other points, as if you would have taken them all into account!"*
 -Rasmunnsen
 
----
+### Game Part 2
+
+**Conditional**
+
+$$p(f^{*} \mid y) = \mathcal{N}\left(\mu_{*} + K_{*}(K + \sigma^2 I)^{-1}(y-\mu), \,\,
+K_{**}-K_{*}(K + \sigma^2 I)^{-1}K_{*}^T \right)
+$$
+
+**EQUALS Predictive**
+
 
 ## Definition of Gaussian Process
 
 Assume we have this function vector
-$$ f=(f(x_1),...f(x_n))$$. If, for ANY choice of input points, $$(x_1,...,x_n)$$, the marginal distribution over $$f$$:
+$ f=(f(x_1),...f(x_n))$. If, for ANY choice of input points, $(x_1,...,x_n)$, the marginal distribution over $f$:
 
-$$P(F) = \int_{f \not\in F} P(f) df$$
+$P(F) = \int_{f \not\in F} P(f) df$
 
-is multi-variate Gaussian, then the distribution $$P(f)$$ over the function $$f$$ is said to be a Gaussian Process.
+is multi-variate Gaussian, then the distribution $P(f)$ over the function $f$ is said to be a Gaussian Process.
 
 We write a Gaussian Process thus:
 
-$$f(x) \sim \mathcal{GP}(m(x), k(x,x\prime))$$
+$f(x) \sim \mathcal{GP}(m(x), k(x,x\prime))$
 
 where the mean and covariance functions can be thought of as the infinite dimensional mean vector and covariance matrix respectively.
 
----
-[.autoscale: true]
+
 
 **a Gaussian Process defines a prior distribution over functions!**
 
@@ -301,25 +306,21 @@ Once we have seen some data, this prior can be converted to a posterior over fun
 
 Since the size of the "other" block of the matrix does not matter, we can do inference from a finite set of points.
 
-Any $$m$$ observations in an arbitrary data set, $$y = {y_1,...,y_n=m}$$ can always be represented as a single point sampled from some $$m$$-variate Gaussian distribution. Thus, we can work backwards to 'partner' a GP with a data set, by marginalizing over the infinitely-many variables that we are not interested in, or have not observed.
+Any $m$ observations in an arbitrary data set, $y = {y_1,...,y_n=m}$ can always be represented as a single point sampled from some $m$-variate Gaussian distribution. Thus, we can work backwards to 'partner' a GP with a data set, by marginalizing over the infinitely-many variables that we are not interested in, or have not observed.
 
----
-[.autoscale: true]
-
-## GP regression
+### GP regression
 
 Using a Gaussian process as a prior for our model, and a Gaussian as our data likelihood, then we can construct a Gaussian process posterior.
 
 Likelihood: $$y|f(x),x \sim \mathcal{N}(f(x), \sigma^2I) $$
 
-where the infinite $$f(x)$$ takes the place of the parameters.
+where the infinite $f(x)$ takes the place of the parameters.
 
-Prior:  $$f(x) \sim \mathcal{GP}(m(x)=0, k(x,x\prime))$$
+Prior:  $f(x) \sim \mathcal{GP}(m(x)=0, k(x,x\prime))$
 
-Infinite normal posterior process: $$f(x)|y \sim \mathcal{GP}(m_{post}, \kappa_{post}(x,x\prime)).$$
+Infinite normal posterior process: $f(x)|y \sim \mathcal{GP}(m_{post}, \kappa_{post}(x,x\prime)).$
 
----
-[.autoscale: true]
+
 
 The posterior distribution for f  is:
 
@@ -328,101 +329,20 @@ m_{post} &= k(x\prime,x)[k(x,x) + \sigma^2I]^{-1}y \\
 k_{post}(x,x\prime) &= k(x\prime,x\prime) - k(x\prime, x)[k(x,x) + \sigma^2I]^{-1}k(x,x\prime)
 \end{aligned}$$
 
-Posterior predictive distribution for $$f(x_*)$$ for a test vector input $$x_*$$, given a training set X with values y for the GP is:
+Posterior predictive distribution for $f(x_*)$ for a test vector input $x_*$, given a training set X with values y for the GP is:
 
 $$\begin{aligned}
 m_* &= k(x_*,X)[k(X^T,X) + \sigma^2I]^{-1}y \\
 k_* &= k(x_*,x_*) - k(x_*,X^T)[k(X^T,X) + \sigma^2I]^{-1}k(X^T,x_*)
 \end{aligned}$$
 
-The predictive distribution of test targets y∗ : add $$\sigma^2 I$$ to $$k_*$$.
+The predictive distribution of test targets y∗ : add $\sigma^2 I$ to$k_*$$.
 
 ---
 
-## What did we do
+## Why does it work?
 
-- usually in a parametric model we had some $$m$$ (small) number of parameters
-- but here our covariance functions are NxN !
-- no free lunch: calculation involves inverting a NxN matrix as in the kernel space representation of regression.
-- cannot thus handle large data if no approximations are used
-
----
-
-## Parametric models
-
-- In general, parametrization restricts the class of functions we use. If our data is not well modeled by our choices, we might underfit.
-
-- Increasing flexibility might lead to overfitting.
-
-INSTEAD: consider every possible function and associate a prior probability with this function. e.g. assign smoother functions higher prior probability. But how are we possibly going to calculate over an uncountably infinite set of functions in finite time?
-
----
-[.autoscale: true]
-
-## Linear Regression
-
-$$y = f(X) + \epsilon, \epsilon \sim N(0,\sigma^2), f(X) = X^{T}w, w \sim N(0,\Sigma)$$
-
-Posterior: $$ p(w | X,y) \sim N(\frac{1}{\sigma^2} A^{-1}Xy, A^{-1})$$ where $$ A = \frac{1}{\sigma^2}XX^T + \Sigma^{-1} $$
-
-Posterior predictive distribution: $$p(f(x_*) | x_* , X, y) = N(\frac{1}{\sigma^2}x_*^TA^{-1}Xy, x_*^T A^{-1}x_*).$$
-
-For posterior predictive of $$y_*$$, just add $$\sigma^2$$ to the variance above.
-
----
-[.autoscale: true]
-
-We can show that we can rewrite the above posterior predictive as:
-
-$$p(f(x_*) | x_* , X, y) = N(x_*^T\Sigma X^T(K + \sigma^2 I)^{-1}y, x_*^T\Sigma x_* - x_*^T\Sigma X^T(K + \sigma^2I)^{-1}X\Sigma x_*)$$
-
-where $$ K = X \Sigma X^T $$ which is of size N x N.
-
-Notice now that the features only appear in the combination $$\kappa(x,x') = x^T \Sigma x'$$, thus, the dual representation:
-
-$$ p(f(x_*) | x_* , X, y) = $$
-$$N\left(\kappa(x_*,X) \left(\kappa(X^T,X) + \sigma^2 I\right)^{-1}y,
-    \,\,\, \kappa(x_*,x_*) - \kappa(x_*,X^T)\left(\kappa(X^T,X) + \sigma^2 I\right)^{-1} \kappa(X^T,x_*) \right)$$
-
----
-
-## Basis functions
-
-A scalar $$x$$ could be projected into a polynomial space: $$\phi(x) = (1, x, x^2, x^3, ...)$$. So let us now have
-
-$$f(x) = \phi(x)^T w$$
-
-![left, fit](../wiki/images/basisfns.png)
-
-Let $$\Phi(X)$$ be the aggregation of columns $$\phi(x)$$ for all training set cases $$x \in X$$.
-
----
-[.autoscale: true]
-
-Then the posterior predictive is $$p(f(x_*) | x_* , X, y) = N(\frac{1}{\sigma^2}\phi_*^TA^{-1}\Phi y, \phi_*^T A^{-1}\phi_*).$$
-
-where  $$\phi_* = \phi(x_*)$$ and $$ A = \frac{1}{\sigma^2}\Phi \Phi^T + \Sigma^{-1} $$
-
-
-which can as before be written as
-
-$$ N(\kappa(x_*,X) \left(\kappa(X^T,X) + \sigma^2 I\right)^{-1}y,\,\,\, \kappa(x_*,x_*) - \kappa(x_*,X^T)\left(\kappa(X^T,X) + \sigma^2 I\right)^{-1} \kappa(X^T,x_*) $$
-
-where the kernel is now $$\kappa(x,x') = \phi(x)^T \Sigma \phi(x')$$
-
-Then defining $$\psi(x)  = \Sigma^{(1/2)} \phi(x)$$, we have $$\kappa(x,x') = \psi(x)^T \psi(x')$$
-
----
-
-## Kernel Trick
-
-If an algorithm is defined just in terms of inner products in input space then we can make the algorithm work in higher-dimensional feature space by replacing occurrences of those inner products by $$\kappa(x,x')$$.
-
-So we learn that covariance can be kernelized, and dimensions can be lifted. This might remind you of SVM.
-
----
-
-## Infinite basis sets
+**Infinite basis sets and Mercer's theorem**
 
 Now consider an infinite set of $$\phi(x)$$. Like a fourier series or a Bessel series.
 
@@ -431,16 +351,6 @@ We can construct an infinitely parametric model.
 This is called a non-parametric model.
 
 We just need to be able to define a finite kernel $$\kappa(x,x') = \psi(x)^T \psi(x')$$!!
-
-#[fit]Conditional
-
-$$p(f^{*} \mid y) = \mathcal{N}\left(\mu_{*} + K_{*}(K + \sigma^2 I)^{-1}(y-\mu), \,\,
-K_{**}-K_{*}(K + \sigma^2 I)^{-1}K_{*}^T \right)
-$$
-
-#[fit]EQUALS Predictive
-
----
 
 ## Levels of Bayes
 
@@ -455,15 +365,6 @@ f Fisheries and Aquatic Sciences, 62:1808–1821, 2005.) use Gaussian process pr
 ) functions for various fish. We concentrate here on Sockeye Salmon. SR functions relate the size of a fish stock
  to the number or biomass of recruits to the fishery each year.  The authors argue that GP priors make sense to use since model uncertainty is high in Stock Recruitment theory.
 
-Here we see the difference between using an Exponential covariance and a Matern Covariance.
-
-
-
-```python
-
-
-
-```
 
 
 
@@ -595,7 +496,7 @@ plt.plot(df.spawners, df.recruits, 'r.', markersize=6, label=u'Observations');
 
 
 
-![png](gpsalmon_files/gpsalmon_24_0.png)
+![png](gpsalmon_files/gpsalmon_26_0.png)
 
 
 ## Inference
@@ -655,7 +556,7 @@ pm.traceplot(salmon_trace, varnames=['ρ', 'η', 'σ']);
 
 
 
-![png](gpsalmon_files/gpsalmon_28_0.png)
+![png](gpsalmon_files/gpsalmon_30_0.png)
 
 
 
@@ -682,7 +583,7 @@ for x in salmon_samples['salmon_pred2']:
 
 
 
-![png](gpsalmon_files/gpsalmon_30_0.png)
+![png](gpsalmon_files/gpsalmon_32_0.png)
 
 
 ### Exercise
@@ -693,12 +594,5 @@ We might be interested in what may happen if the population gets very large -- s
 
 ```python
 # Write answer here
-```
-
-
-
-
-```python
-
 ```
 
