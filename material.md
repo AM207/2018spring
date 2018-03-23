@@ -138,3 +138,7 @@ Lecture 15: **Linear Regression**
 Lecture 16: **Gaussian Processes**
 
 [Slides, Notes and Readings](lectures/lecture16.html)
+
+Lab8: **Regression and GPs**
+
+[Material](lectures/lab8.html)

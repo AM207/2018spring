@@ -27,3 +27,4 @@ layout: "default"
 - [lab 7](lab7.html): Sampling and Hierarchical Models
 - [Lecture 15](lecture15.html): Linear Regression
 - [Lecture 16](lecture16.html): Gaussian Processes
+- [lab 8](lab8.html): Regression and GP
