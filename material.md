@@ -142,3 +142,9 @@ Lecture 16: **Gaussian Processes**
 Lab8: **Regression and GPs**
 
 [Material](lectures/lab8.html)
+
+---
+
+Lecture 17: **Augmentation and Slice and HMC**
+
+[Slides, Notes and Readings](lectures/lecture17.html)

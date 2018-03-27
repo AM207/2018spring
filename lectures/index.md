@@ -28,3 +28,4 @@ layout: "default"
 - [Lecture 15](lecture15.html): Linear Regression
 - [Lecture 16](lecture16.html): Gaussian Processes
 - [lab 8](lab8.html): Regression and GP
+- [Lecture 17](lecture17.html): Augmentation and Slice and HMC
