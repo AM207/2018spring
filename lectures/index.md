@@ -29,3 +29,4 @@ layout: "default"
 - [Lecture 16](lecture16.html): Gaussian Processes
 - [lab 8](lab8.html): Regression and GP
 - [Lecture 17](lecture17.html): Augmentation and Slice and HMC
+- [Lecture 18](lecture18.html): HMC, Normal Normal Hierarchical
