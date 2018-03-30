@@ -35,33 +35,6 @@ import pymc3 as pm
 ```
 
 
-
-
-## Installation woes
-
-To follow along on this notebook, we are going to use a cutting-edge version of pymc3: the developers add features very fast, and a feature we'd like to use here is the ability of pymc3 to tell us which integrations diverged.
-
-This is what you need to do:
-
-```
-pip install theano==0.9
-pip install pymc3==3.1rc2
-```
-
-
-
-```python
-pm.__version__
-```
-
-
-
-
-
-    '3.1.rc2'
-
-
-
 ## Centered parametrization
 
 We'll set up the modelled in what is called a "Centered" parametrization which tells us how $\theta_i$ is modelled: it is written to be directly dependent as a normal distribution from the hyper-parameters. 
@@ -107,7 +80,13 @@ with schools1:
 ```
 
 
-    100%|██████████| 5000/5000 [00:29<00:00, 191.81it/s]   | 1/5000 [00:00<08:32,  9.76it/s]
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [theta, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:17<00:00, 336.71it/s]
+    There were 204 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.623427492984, but should be close to 0.8. Try to increase the number of tuning steps.
+    There were 286 divergences after tuning. Increase `target_accept` or reparameterize.
+    The number of effective samples is smaller than 10% for some parameters.
 
 
 
@@ -120,15 +99,13 @@ pm.diagnostics.gelman_rubin(trace1), pm.diagnostics.effective_n(trace1)
 
 
 
-    ({'mu': 1.0005631416817737,
-      'tau': 1.000052543085129,
-      'tau_log_': 1.0006214172273011,
-      'theta': array([ 0.99990364,  0.99990547,  1.00000407,  1.0005178 ,  1.00064279,
-              1.0006689 ,  1.00002825,  0.99999665])},
-     {'mu': 1482.0,
-      'tau': 732.0,
-      'tau_log_': 189.0,
-      'theta': array([ 2406.,  2950.,  2901.,  3135.,  2428.,  3019.,  1768.,  3109.])})
+    ({'mu': 1.0000549084613826,
+      'tau': 1.0043269865775277,
+      'theta': array([ 1.00054258,  1.00050228,  1.00000803,  1.0001573 ,  0.9999901 ,
+              0.99990484,  1.00027817,  1.00013901])},
+     {'mu': 1014.0,
+      'tau': 243.0,
+      'theta': array([ 1840.,  1812.,  2034.,  1992.,  1543.,  1851.,  1194.,  2241.])})
 
 
 
@@ -142,7 +119,7 @@ pm.traceplot(trace1);
 
 
 
-![png](hmctweaking_files/hmctweaking_12_0.png)
+![png](hmctweaking_files/hmctweaking_10_0.png)
 
 
 Its hard to pick the thetas out but $\tau$ looks not so white-noisy. Lets zoom in:
@@ -150,20 +127,20 @@ Its hard to pick the thetas out but $\tau$ looks not so white-noisy. Lets zoom i
 
 
 ```python
-pm.traceplot(trace1, varnames=['tau_log_'])
+pm.traceplot(trace1, varnames=['tau_log__'])
 ```
 
 
 
 
 
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x1201da710>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x120397a90>]], dtype=object)
+    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x1152f6c88>,
+            <matplotlib.axes._subplots.AxesSubplot object at 0x1154c4cf8>]], dtype=object)
 
 
 
 
-![png](hmctweaking_files/hmctweaking_14_1.png)
+![png](hmctweaking_files/hmctweaking_12_1.png)
 
 
 There seems to be some stickiness at lower values in the trace. Zooming in even more helps us see this better:
@@ -171,7 +148,7 @@ There seems to be some stickiness at lower values in the trace. Zooming in even 
 
 
 ```python
-plt.plot(trace1['tau_log_'], alpha=0.6)
+plt.plot(trace1['tau_log__'], alpha=0.6)
 plt.axvline(5000, color="r")
 #plt.plot(short_trace['tau_log_'][5000:], alpha=0.6);
 ```
@@ -180,12 +157,12 @@ plt.axvline(5000, color="r")
 
 
 
-    <matplotlib.lines.Line2D at 0x12040f2b0>
+    <matplotlib.lines.Line2D at 0x11555a4a8>
 
 
 
 
-![png](hmctweaking_files/hmctweaking_16_1.png)
+![png](hmctweaking_files/hmctweaking_14_1.png)
 
 
 ### Tracking divergences
@@ -200,15 +177,15 @@ print('Percentage of Divergent %.5f' % divperc)
 ```
 
 
-    Number of Divergent 71
-    Percentage of Divergent 0.01420
+    Number of Divergent 490
+    Percentage of Divergent 0.09800
 
 
 
 
 ```python
 def biasplot(trace):
-    logtau = trace['tau_log_']
+    logtau = trace['tau_log__']
     mlogtau = [np.mean(logtau[:i]) for i in np.arange(1, len(logtau))]
     plt.figure(figsize=(8, 2))
     plt.axhline(0.7657852, lw=2.5, color='gray')
@@ -228,20 +205,20 @@ biasplot(trace1)
 
 
 
-![png](hmctweaking_files/hmctweaking_20_0.png)
+![png](hmctweaking_files/hmctweaking_18_0.png)
 
 
 
 
 ```python
 def funnelplot(trace):
-    logtau = trace['tau_log_']
+    logtau = trace['tau_log__']
     divergent = trace['diverging']
     theta_trace = trace['theta']
     theta0 = theta_trace[:, 0]
     plt.figure(figsize=(5, 3))
-    plt.scatter(theta0[divergent == 0], logtau[divergent == 0], color='r')
-    plt.scatter(theta0[divergent == 1], logtau[divergent == 1], color='g')
+    plt.scatter(theta0[divergent == 0], logtau[divergent == 0], s=10, color='r', alpha=0.1)
+    plt.scatter(theta0[divergent == 1], logtau[divergent == 1], s=10, color='g')
     plt.axis([-20, 50, -6, 4])
     plt.ylabel('log(tau)')
     plt.xlabel('theta[0]')
@@ -258,8 +235,10 @@ funnelplot(trace1)
 
 
 
-![png](hmctweaking_files/hmctweaking_22_0.png)
+![png](hmctweaking_files/hmctweaking_20_0.png)
 
+
+You can also get an idea of your acceptance rate. 65% is decent for NUTS.
 
 
 
@@ -271,7 +250,7 @@ np.mean(trace1['mean_tree_accept'])
 
 
 
-    0.7829179856279076
+    0.68318350944026562
 
 
 
@@ -310,10 +289,33 @@ with schools1:
 ```
 
 
-    100%|██████████| 5000/5000 [00:38<00:00, 130.79it/s]   | 10/5000 [00:00<00:50, 99.63it/s]
-    100%|██████████| 5000/5000 [00:56<00:00, 88.53it/s] 
-    100%|██████████| 5000/5000 [00:50<00:00, 98.55it/s] 
-    100%|██████████| 5000/5000 [12:51<00:00,  3.38it/s]
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [theta, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:19<00:00, 315.07it/s]
+    There were 140 divergences after tuning. Increase `target_accept` or reparameterize.
+    There were 72 divergences after tuning. Increase `target_accept` or reparameterize.
+    The number of effective samples is smaller than 10% for some parameters.
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [theta, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:23<00:00, 258.51it/s]
+    There were 81 divergences after tuning. Increase `target_accept` or reparameterize.
+    There were 210 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.786856074093, but should be close to 0.9. Try to increase the number of tuning steps.
+    The number of effective samples is smaller than 10% for some parameters.
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [theta, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:25<00:00, 239.79it/s]
+    There were 207 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.781035257632, but should be close to 0.95. Try to increase the number of tuning steps.
+    There were 40 divergences after tuning. Increase `target_accept` or reparameterize.
+    The number of effective samples is smaller than 10% for some parameters.
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [theta, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:49<00:00, 120.93it/s]
+    There were 29 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.943580044253, but should be close to 0.99. Try to increase the number of tuning steps.
+    There were 16 divergences after tuning. Increase `target_accept` or reparameterize.
+    The number of effective samples is smaller than 10% for some parameters.
 
 
 
@@ -324,10 +326,10 @@ for t in [trace1_85, trace1_90, trace1_95, trace1_99]:
 ```
 
 
-    Acceptance 0.804601458758 Step Size 0.203087336483 Divergence 39
-    Acceptance 0.873340820433 Step Size 0.159223726996 Divergence 18
-    Acceptance 0.923346597897 Step Size 0.126824682121 Divergence 9
-    Acceptance 0.990173791609 Step Size 0.0164237997757 Divergence 5
+    Acceptance 0.816093317813 Step Size 0.283654486484 Divergence 212
+    Acceptance 0.818185524937 Step Size 0.235499133243 Divergence 291
+    Acceptance 0.858628851783 Step Size 0.0726247208723 Divergence 247
+    Acceptance 0.963351617867 Step Size 0.0410913852246 Divergence 45
 
 
 
@@ -340,53 +342,53 @@ for t in [trace1_85, trace1_90, trace1_95, trace1_99]:
 
 
 
-![png](hmctweaking_files/hmctweaking_28_0.png)
+![png](hmctweaking_files/hmctweaking_27_0.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_1.png)
+![png](hmctweaking_files/hmctweaking_27_1.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_2.png)
+![png](hmctweaking_files/hmctweaking_27_2.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_3.png)
+![png](hmctweaking_files/hmctweaking_27_3.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_4.png)
+![png](hmctweaking_files/hmctweaking_27_4.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_5.png)
+![png](hmctweaking_files/hmctweaking_27_5.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_6.png)
+![png](hmctweaking_files/hmctweaking_27_6.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_28_7.png)
+![png](hmctweaking_files/hmctweaking_27_7.png)
 
 
 
 
 ```python
-plt.plot(trace1_99['tau_log_'])
+plt.plot(trace1_99['tau_log__'])
 ```
 
 
 
 
 
-    [<matplotlib.lines.Line2D at 0x11cc13cf8>]
+    [<matplotlib.lines.Line2D at 0x116d20860>]
 
 
 
 
-![png](hmctweaking_files/hmctweaking_29_1.png)
+![png](hmctweaking_files/hmctweaking_28_1.png)
 
 
 The divergences decrease, but dont totally go away, showing that we have lost some geometric ergodicity. And as we get to a very small step size we explore the funnel much better, but we are now taking our sampler more into a MH like random walk regime, and our sampler looks very strongly autocorrelated.
@@ -431,7 +433,11 @@ with schools2:
 ```
 
 
-    100%|██████████| 5000/5000 [00:11<00:00, 426.83it/s]   | 1/5000 [00:00<15:26,  5.40it/s]
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [nu, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:09<00:00, 644.89it/s]
+    There were 3 divergences after tuning. Increase `target_accept` or reparameterize.
+    There were 1 divergences after tuning. Increase `target_accept` or reparameterize.
 
 
 And we reach the true value better as the number of samples increases, decreasing our bias
@@ -444,7 +450,7 @@ biasplot(trace2)
 
 
 
-![png](hmctweaking_files/hmctweaking_35_0.png)
+![png](hmctweaking_files/hmctweaking_34_0.png)
 
 
 How about our divergences? They have decreased too.
@@ -459,8 +465,8 @@ print('Percentage of Divergent %.5f' % divperc)
 ```
 
 
-    Number of Divergent 13
-    Percentage of Divergent 0.00260
+    Number of Divergent 4
+    Percentage of Divergent 0.00080
 
 
 
@@ -471,7 +477,7 @@ funnelplot(trace2)
 
 
 
-![png](hmctweaking_files/hmctweaking_38_0.png)
+![png](hmctweaking_files/hmctweaking_37_0.png)
 
 
 The divergences are infrequent and do not seem to concentrate anywhere, indicative of false positives. Lowering the step size should make them go away.
@@ -487,7 +493,9 @@ with schools2:
 ```
 
 
-    100%|██████████| 5000/5000 [00:19<00:00, 256.73it/s]   | 14/5000 [00:00<00:36, 134.85it/s]
+    Multiprocess sampling (2 chains in 2 jobs)
+    NUTS: [nu, tau_log__, mu]
+    100%|██████████| 6000/6000 [00:14<00:00, 410.85it/s]
 
 
 
@@ -498,7 +506,7 @@ biasplot(trace2_95)
 
 
 
-![png](hmctweaking_files/hmctweaking_42_0.png)
+![png](hmctweaking_files/hmctweaking_41_0.png)
 
 
 
@@ -509,7 +517,7 @@ funnelplot(trace2_95)
 
 
 
-![png](hmctweaking_files/hmctweaking_43_0.png)
+![png](hmctweaking_files/hmctweaking_42_0.png)
 
 
 Indeed at a smaller step-size our false-positive divergences go away, and the lower curvature in our parametrization ensures geometric ergodicity deep in our funnel
@@ -568,34 +576,11 @@ resample_plot(trace1);
 ```
 
 
-    //anaconda/envs/py35/lib/python3.5/site-packages/numpy/lib/function_base.py:564: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      n = np.zeros(bins, ntype)
-    //anaconda/envs/py35/lib/python3.5/site-packages/numpy/lib/function_base.py:600: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      n += np.bincount(indices, weights=tmp_w, minlength=bins).astype(ntype)
-    //anaconda/envs/py35/lib/python3.5/site-packages/statsmodels/nonparametric/kdetools.py:20: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      y = X[:m/2+1] + np.r_[0,X[m/2+1:],0]*1j
 
-
-
-![png](hmctweaking_files/hmctweaking_50_1.png)
+![png](hmctweaking_files/hmctweaking_49_0.png)
 
 
 Awful. The momentum resamples here will do a very slow job of traversing this distribution. This is indicative of the second issue we were having with this centered model (the first was a large step size for the curvature causing loss of symplectivity): the momentum resampling simply cannot provide enough energy to traverse the large energy changes that occur in this hierarchical model.
-
-
-
-```python
-resample_plot(trace1_95)
-```
-
-
-    //anaconda/envs/py35/lib/python3.5/site-packages/statsmodels/nonparametric/kdetools.py:20: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      y = X[:m/2+1] + np.r_[0,X[m/2+1:],0]*1j
-
-
-
-![png](hmctweaking_files/hmctweaking_52_1.png)
-
 
 Note the caveat with such a plot obtained from our chains: it only tells us about the energies it explored: not the energies it ought to be exploring, as can be seen in the plot with `trace1_99` below. Still, a great diagnostic.
 
@@ -606,16 +591,8 @@ resample_plot(trace1_99)
 ```
 
 
-    //anaconda/envs/py35/lib/python3.5/site-packages/numpy/lib/function_base.py:564: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      n = np.zeros(bins, ntype)
-    //anaconda/envs/py35/lib/python3.5/site-packages/numpy/lib/function_base.py:600: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      n += np.bincount(indices, weights=tmp_w, minlength=bins).astype(ntype)
-    //anaconda/envs/py35/lib/python3.5/site-packages/statsmodels/nonparametric/kdetools.py:20: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      y = X[:m/2+1] + np.r_[0,X[m/2+1:],0]*1j
 
-
-
-![png](hmctweaking_files/hmctweaking_54_1.png)
+![png](hmctweaking_files/hmctweaking_52_0.png)
 
 
 The match is much better for the non-centered version of our model.
@@ -627,12 +604,8 @@ resample_plot(trace2)
 ```
 
 
-    //anaconda/envs/py35/lib/python3.5/site-packages/statsmodels/nonparametric/kdetools.py:20: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      y = X[:m/2+1] + np.r_[0,X[m/2+1:],0]*1j
 
-
-
-![png](hmctweaking_files/hmctweaking_56_1.png)
+![png](hmctweaking_files/hmctweaking_54_0.png)
 
 
 
@@ -642,17 +615,6 @@ resample_plot(trace2_95)
 ```
 
 
-    //anaconda/envs/py35/lib/python3.5/site-packages/statsmodels/nonparametric/kdetools.py:20: VisibleDeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-      y = X[:m/2+1] + np.r_[0,X[m/2+1:],0]*1j
 
-
-
-![png](hmctweaking_files/hmctweaking_57_1.png)
-
-
-
-
-```python
-
-```
+![png](hmctweaking_files/hmctweaking_55_0.png)
 
