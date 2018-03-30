@@ -30,3 +30,4 @@ layout: "default"
 - [lab 8](lab8.html): Regression and GP
 - [Lecture 17](lecture17.html): Augmentation and Slice and HMC
 - [Lecture 18](lecture18.html): HMC, Normal Normal Hierarchical
+- [lab 9](lab9.html): Normal-Normal Hierarchicals

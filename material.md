@@ -152,3 +152,7 @@ Lecture 17: **Augmentation and Slice and HMC**
 Lecture 18: **HMC, Normal Normal Hierarchical**
 
 [Slides, Notes and Readings](lectures/lecture18.html)
+
+Lab9: **Normal-Normal Hierarchicals**
+
+[Material](lectures/lab9.html)

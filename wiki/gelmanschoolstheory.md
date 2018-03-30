@@ -90,38 +90,20 @@ In other problems, like the one on your homework where we will use this model, y
 
 ![](images/restuarant_model.png)
 
-Let us choose a prior:
+We want to set up a Bayesian model for a reviewer $j$'s opinion of restaurant $k$'s food and service, separately. That is, you will have a model for each restaurant and each aspect (food and serivce). For restaurant $k$, you will have a model for $\{\theta_{jk}^{\text{food}}\}$ and one for $\{\theta_{jk}^{\text{service}}\}$, where $\theta_{jk}$ is the positivity of the opinion of the $j$-th reviewer regarding the $k$-th restaurant. 
 
-$$
-\theta_j \sim N(\mu, \tau^2)
-$$
+To think about this, first just fix a restaurant, say $k=1$..and also fix an aspect, say food. Then the $\thetas$ are just like in the schools problem. We have a bunch of reviews for that restaurant. And each review, given an aspect, has a sample of sentences for the review. For each of these reviews (schools) we have a mean and a variance over the sentiment of the sentences
 
-$\theta_j$ is the parameter we were estimating by the review-topic mean earlier.
+So now, consider the analogs: each review corresponds to a school, and we have a sample of sentences for the review. The multiple reviews (say 8) for a restarant are an analog to the 8 schools. So the overall "treatment" effect we are looking at is really the overall sentiment corresponding to an aspect (say service) of A GIVEN restaurant. 
 
-The second of the formulae above will allow us to share information between reviews within each restaurant.
+Now think of the pooling going on here. Some reviews may say a lot about food and not much about service. Some may say a lot about both. What we are doing os pooling information across these reviews to estimate the overall "treatment": how good is this restaurant really for service, for example
 
-After doing some math, we can calculate the posterior distribution:
+You have to think what quantity in our data naturally corresponds to $\bar{y}_j$'s in the prep school example? How would you calculate the parameter $\sigma_j^2$ in the distribution of $\bar{y}_j$ (note that, contrary to the school example, $\sigma_j^2$ is not provided explictly in the restaurant data).
 
-$$
-p(\theta_j\, \vert \,\bar{y}_{j})\propto p(\bar{y}_{j}\, \vert \,\theta_j) p(\theta_j)
-\propto \exp\left(-\frac{1}{2 \sigma_j^2} \left(\bar{y}_{j}-\theta_j\right)^2\right)  \exp\left(-\frac{1}{2 \tau^2} \left(\theta_j-\mu\right)^2\right)
-$$
+We want to use our model to produce estimates for $\theta_{jk}$'s. Se we will want to pick a few restaurants, for each aspect ("food" and "service") of each restaurant, plot our estimates for the $\theta$'s against the values in the "mean" column (corresponding to this restaurant). And this will shows us our shrinkage from the observed mean sentiments to some "pooled" sentiment.
 
-After some amount of algebra you'll find that this is the kernel of a normal distribution with mean 
+Now you can rank restaurants by these pooled senitivities, with all the caveats that you noticed from the rubber-ducky problem.
 
-$\frac{1}{\sigma^2_{\text{post}}}\left(\frac{\mu}{\tau^2} + \frac{\bar{y}_{j}}{\sigma^2_{j}}\right)$ 
-
-and variance 
-
-$ \sigma^2_{\text{post}} = \left(\frac{1}{\tau^2} + \frac{1}{\sigma^2_{j}}\right)^{-1}$. 
-
-We can simplify the mean further to see a familiar form:
-
-$$
-\mathbb{E}[\theta_j\, \vert \,\bar y_j, \mu, \sigma_j^2, \tau^2] = \frac{\sigma_j^2}{\sigma_j^2 + \tau^2} \mu + \frac{\tau^2}{\sigma_j^2 + \tau^2}\bar{y}_{j}.
-$$
-
-The _posterior mean_ is a weighted average of the prior mean and the observed average. 
 
 ## Setting up the hierarchical model for Gelman Schools
 
@@ -219,10 +201,8 @@ pm.traceplot(trace2)
 
 
 
-![png](gelmanschoolstheory_files/gelmanschoolstheory_15_1.png)
+![png](gelmanschoolstheory_files/gelmanschoolstheory_14_1.png)
 
-
-Ok, so this seems to look better!
 
 
 
@@ -240,10 +220,8 @@ plt.axvline(5000, color="r")
 
 
 
-![png](gelmanschoolstheory_files/gelmanschoolstheory_17_1.png)
+![png](gelmanschoolstheory_files/gelmanschoolstheory_15_1.png)
 
-
-And the effective number of iterations hs improved as well:
 
 
 
@@ -268,35 +246,6 @@ pm.diagnostics.gelman_rubin(trace2), pm.diagnostics.effective_n(trace2)
       'theta': array([ 18662.,  20000.,  17823.,  20000.,  20000.,  20000.,  20000.,
               20000.])})
 
-
-
-And we reach the true value better as the number of samples increases, decreasing our bias
-
-
-
-```python
-# plot the estimate for the mean of log(τ) cumulating mean
-logtau = trace2['tau_log__']
-mlogtau = [np.mean(logtau[:i]) for i in np.arange(1, len(logtau))]
-plt.figure(figsize=(15, 4))
-plt.axhline(0.7657852, lw=2.5, color='gray')
-plt.plot(mlogtau, lw=2.5)
-plt.ylim(0, 2)
-plt.xlabel('Iteration')
-plt.ylabel('MCMC mean of log(tau)')
-plt.title('MCMC estimation of cumsum log(tau)')
-```
-
-
-
-
-
-    <matplotlib.text.Text at 0x117c98ef0>
-
-
-
-
-![png](gelmanschoolstheory_files/gelmanschoolstheory_21_1.png)
 
 
 How about our divergences? They seem to be more than what we saw in class but note that we have double the number of samples and the divergences are distributed fairly uniformly so we are sure they are false positives.
@@ -332,7 +281,7 @@ plt.show()
 
 
 
-![png](gelmanschoolstheory_files/gelmanschoolstheory_24_0.png)
+![png](gelmanschoolstheory_files/gelmanschoolstheory_19_0.png)
 
 
 Look how much longer the funnel actually is. And we have explored this much better. We can now reduce the step size to check that the divergences go away. The reduced step size is not needed for the sampler once we did this, but it is a check that is worth doing to make sure your sampler is ok.
