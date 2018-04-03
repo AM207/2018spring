@@ -156,3 +156,9 @@ Lecture 18: **HMC, Normal Normal Hierarchical**
 Lab9: **Normal-Normal Hierarchicals**
 
 [Material](lectures/lab9.html)
+
+---
+
+Lecture 19: **Posterior Predictive Checks and GLMs**
+
+[Slides, Notes and Readings](lectures/lecture19.html)

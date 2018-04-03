@@ -82,11 +82,13 @@ with schools1:
 
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [theta, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:17<00:00, 336.71it/s]
-    There were 204 divergences after tuning. Increase `target_accept` or reparameterize.
-    The acceptance probability does not match the target. It is 0.623427492984, but should be close to 0.8. Try to increase the number of tuning steps.
-    There were 286 divergences after tuning. Increase `target_accept` or reparameterize.
-    The number of effective samples is smaller than 10% for some parameters.
+    100%|██████████| 6000/6000 [00:11<00:00, 509.61it/s]
+    There were 914 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.445177634049, but should be close to 0.8. Try to increase the number of tuning steps.
+    There were 88 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.71464739587, but should be close to 0.8. Try to increase the number of tuning steps.
+    The gelman-rubin statistic is larger than 1.05 for some parameters. This indicates slight problems during sampling.
+    The estimated number of effective samples is smaller than 200 for some parameters.
 
 
 
@@ -99,13 +101,13 @@ pm.diagnostics.gelman_rubin(trace1), pm.diagnostics.effective_n(trace1)
 
 
 
-    ({'mu': 1.0000549084613826,
-      'tau': 1.0043269865775277,
-      'theta': array([ 1.00054258,  1.00050228,  1.00000803,  1.0001573 ,  0.9999901 ,
-              0.99990484,  1.00027817,  1.00013901])},
-     {'mu': 1014.0,
-      'tau': 243.0,
-      'theta': array([ 1840.,  1812.,  2034.,  1992.,  1543.,  1851.,  1194.,  2241.])})
+    ({'mu': 1.0214138101971797,
+      'tau': 1.0890758192035539,
+      'theta': array([ 1.00109614,  1.00574629,  1.01928611,  1.01160475,  1.03728323,
+              1.01563653,  1.00039723,  1.00409768])},
+     {'mu': 30.0,
+      'tau': 9.0,
+      'theta': array([ 1826.,  1694.,    37.,   220.,    25.,    36.,  1430.,  2591.])})
 
 
 
@@ -127,6 +129,20 @@ Its hard to pick the thetas out but $\tau$ looks not so white-noisy. Lets zoom i
 
 
 ```python
+trace1.varnames
+```
+
+
+
+
+
+    ['mu', 'tau_log__', 'theta', 'tau']
+
+
+
+
+
+```python
 pm.traceplot(trace1, varnames=['tau_log__'])
 ```
 
@@ -134,13 +150,13 @@ pm.traceplot(trace1, varnames=['tau_log__'])
 
 
 
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x1152f6c88>,
-            <matplotlib.axes._subplots.AxesSubplot object at 0x1154c4cf8>]], dtype=object)
+    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x1192ec438>,
+            <matplotlib.axes._subplots.AxesSubplot object at 0x1185e6470>]], dtype=object)
 
 
 
 
-![png](hmctweaking_files/hmctweaking_12_1.png)
+![png](hmctweaking_files/hmctweaking_13_1.png)
 
 
 There seems to be some stickiness at lower values in the trace. Zooming in even more helps us see this better:
@@ -157,12 +173,12 @@ plt.axvline(5000, color="r")
 
 
 
-    <matplotlib.lines.Line2D at 0x11555a4a8>
+    <matplotlib.lines.Line2D at 0x1184761d0>
 
 
 
 
-![png](hmctweaking_files/hmctweaking_14_1.png)
+![png](hmctweaking_files/hmctweaking_15_1.png)
 
 
 ### Tracking divergences
@@ -171,14 +187,28 @@ plt.axvline(5000, color="r")
 
 ```python
 divergent = trace1['diverging']
+divergent
+```
+
+
+
+
+
+    array([False, False, False, ..., False, False, False], dtype=bool)
+
+
+
+
+
+```python
 print('Number of Divergent %d' % divergent.nonzero()[0].size)
 divperc = divergent.nonzero()[0].size/len(trace1)
 print('Percentage of Divergent %.5f' % divperc)
 ```
 
 
-    Number of Divergent 490
-    Percentage of Divergent 0.09800
+    Number of Divergent 1002
+    Percentage of Divergent 0.20040
 
 
 
@@ -205,7 +235,7 @@ biasplot(trace1)
 
 
 
-![png](hmctweaking_files/hmctweaking_18_0.png)
+![png](hmctweaking_files/hmctweaking_20_0.png)
 
 
 
@@ -235,7 +265,7 @@ funnelplot(trace1)
 
 
 
-![png](hmctweaking_files/hmctweaking_20_0.png)
+![png](hmctweaking_files/hmctweaking_22_0.png)
 
 
 You can also get an idea of your acceptance rate. 65% is decent for NUTS.
@@ -250,7 +280,7 @@ np.mean(trace1['mean_tree_accept'])
 
 
 
-    0.68318350944026562
+    0.57991251495943541
 
 
 
@@ -291,30 +321,34 @@ with schools1:
 
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [theta, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:19<00:00, 315.07it/s]
-    There were 140 divergences after tuning. Increase `target_accept` or reparameterize.
-    There were 72 divergences after tuning. Increase `target_accept` or reparameterize.
+    100%|██████████| 6000/6000 [00:16<00:00, 363.88it/s]
+    There were 158 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.718139302733, but should be close to 0.85. Try to increase the number of tuning steps.
+    There were 245 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.7030685137, but should be close to 0.85. Try to increase the number of tuning steps.
     The number of effective samples is smaller than 10% for some parameters.
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [theta, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:23<00:00, 258.51it/s]
-    There were 81 divergences after tuning. Increase `target_accept` or reparameterize.
-    There were 210 divergences after tuning. Increase `target_accept` or reparameterize.
-    The acceptance probability does not match the target. It is 0.786856074093, but should be close to 0.9. Try to increase the number of tuning steps.
+    100%|██████████| 6000/6000 [00:21<00:00, 284.50it/s]
+    There were 76 divergences after tuning. Increase `target_accept` or reparameterize.
+    There were 156 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.717631407103, but should be close to 0.9. Try to increase the number of tuning steps.
     The number of effective samples is smaller than 10% for some parameters.
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [theta, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:25<00:00, 239.79it/s]
-    There were 207 divergences after tuning. Increase `target_accept` or reparameterize.
-    The acceptance probability does not match the target. It is 0.781035257632, but should be close to 0.95. Try to increase the number of tuning steps.
-    There were 40 divergences after tuning. Increase `target_accept` or reparameterize.
+    100%|██████████| 6000/6000 [00:32<00:00, 186.34it/s]
+    There were 87 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.906593617309, but should be close to 0.95. Try to increase the number of tuning steps.
+    There were 167 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.834705258178, but should be close to 0.95. Try to increase the number of tuning steps.
     The number of effective samples is smaller than 10% for some parameters.
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [theta, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:49<00:00, 120.93it/s]
-    There were 29 divergences after tuning. Increase `target_accept` or reparameterize.
-    The acceptance probability does not match the target. It is 0.943580044253, but should be close to 0.99. Try to increase the number of tuning steps.
-    There were 16 divergences after tuning. Increase `target_accept` or reparameterize.
+    100%|██████████| 6000/6000 [00:52<00:00, 114.73it/s]
+    There were 22 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.95631951392, but should be close to 0.99. Try to increase the number of tuning steps.
+    There were 23 divergences after tuning. Increase `target_accept` or reparameterize.
+    The acceptance probability does not match the target. It is 0.959504633927, but should be close to 0.99. Try to increase the number of tuning steps.
     The number of effective samples is smaller than 10% for some parameters.
 
 
@@ -326,10 +360,10 @@ for t in [trace1_85, trace1_90, trace1_95, trace1_99]:
 ```
 
 
-    Acceptance 0.816093317813 Step Size 0.283654486484 Divergence 212
-    Acceptance 0.818185524937 Step Size 0.235499133243 Divergence 291
-    Acceptance 0.858628851783 Step Size 0.0726247208723 Divergence 247
-    Acceptance 0.963351617867 Step Size 0.0410913852246 Divergence 45
+    Acceptance 0.710603908216 Step Size 0.320560550265 Divergence 403
+    Acceptance 0.780963159621 Step Size 0.239954261044 Divergence 232
+    Acceptance 0.870649437743 Step Size 0.174223895957 Divergence 254
+    Acceptance 0.957912073924 Step Size 0.0766605241909 Divergence 45
 
 
 
@@ -342,35 +376,35 @@ for t in [trace1_85, trace1_90, trace1_95, trace1_99]:
 
 
 
-![png](hmctweaking_files/hmctweaking_27_0.png)
+![png](hmctweaking_files/hmctweaking_29_0.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_1.png)
+![png](hmctweaking_files/hmctweaking_29_1.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_2.png)
+![png](hmctweaking_files/hmctweaking_29_2.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_3.png)
+![png](hmctweaking_files/hmctweaking_29_3.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_4.png)
+![png](hmctweaking_files/hmctweaking_29_4.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_5.png)
+![png](hmctweaking_files/hmctweaking_29_5.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_6.png)
+![png](hmctweaking_files/hmctweaking_29_6.png)
 
 
 
-![png](hmctweaking_files/hmctweaking_27_7.png)
+![png](hmctweaking_files/hmctweaking_29_7.png)
 
 
 
@@ -383,12 +417,461 @@ plt.plot(trace1_99['tau_log__'])
 
 
 
-    [<matplotlib.lines.Line2D at 0x116d20860>]
+    [<matplotlib.lines.Line2D at 0x11bb497f0>]
 
 
 
 
-![png](hmctweaking_files/hmctweaking_28_1.png)
+![png](hmctweaking_files/hmctweaking_30_1.png)
+
+
+
+
+```python
+df99 = pm.trace_to_dataframe(trace1_99)
+df99.head()
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mu</th>
+      <th>theta__0</th>
+      <th>theta__1</th>
+      <th>theta__2</th>
+      <th>theta__3</th>
+      <th>theta__4</th>
+      <th>theta__5</th>
+      <th>theta__6</th>
+      <th>theta__7</th>
+      <th>tau</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.476766</td>
+      <td>5.244940</td>
+      <td>11.947961</td>
+      <td>-2.145423</td>
+      <td>-4.379043</td>
+      <td>-2.582646</td>
+      <td>-6.725088</td>
+      <td>0.876145</td>
+      <td>1.316700</td>
+      <td>5.273161</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.609032</td>
+      <td>12.076996</td>
+      <td>-7.616970</td>
+      <td>6.384172</td>
+      <td>5.940715</td>
+      <td>3.010732</td>
+      <td>13.464991</td>
+      <td>3.902260</td>
+      <td>-2.996996</td>
+      <td>6.836384</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.430340</td>
+      <td>10.423970</td>
+      <td>-0.889389</td>
+      <td>7.728908</td>
+      <td>8.366453</td>
+      <td>5.533233</td>
+      <td>15.195454</td>
+      <td>5.423708</td>
+      <td>5.681029</td>
+      <td>6.246578</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.950691</td>
+      <td>3.769489</td>
+      <td>-2.915153</td>
+      <td>4.353163</td>
+      <td>-3.110655</td>
+      <td>2.558563</td>
+      <td>-3.668601</td>
+      <td>7.396706</td>
+      <td>3.781000</td>
+      <td>3.469858</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.124394</td>
+      <td>8.179717</td>
+      <td>11.401375</td>
+      <td>13.333014</td>
+      <td>4.985015</td>
+      <td>-2.360172</td>
+      <td>3.140696</td>
+      <td>7.872551</td>
+      <td>1.341216</td>
+      <td>6.758684</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+```python
+df99.corr()
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mu</th>
+      <th>theta__0</th>
+      <th>theta__1</th>
+      <th>theta__2</th>
+      <th>theta__3</th>
+      <th>theta__4</th>
+      <th>theta__5</th>
+      <th>theta__6</th>
+      <th>theta__7</th>
+      <th>tau</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mu</th>
+      <td>1.000000</td>
+      <td>0.496149</td>
+      <td>0.575298</td>
+      <td>0.605714</td>
+      <td>0.605968</td>
+      <td>0.617708</td>
+      <td>0.600656</td>
+      <td>0.507750</td>
+      <td>0.559291</td>
+      <td>-0.137465</td>
+    </tr>
+    <tr>
+      <th>theta__0</th>
+      <td>0.496149</td>
+      <td>1.000000</td>
+      <td>0.354088</td>
+      <td>0.268464</td>
+      <td>0.340208</td>
+      <td>0.229898</td>
+      <td>0.277801</td>
+      <td>0.459301</td>
+      <td>0.356955</td>
+      <td>0.363872</td>
+    </tr>
+    <tr>
+      <th>theta__1</th>
+      <td>0.575298</td>
+      <td>0.354088</td>
+      <td>1.000000</td>
+      <td>0.329506</td>
+      <td>0.361995</td>
+      <td>0.330835</td>
+      <td>0.359453</td>
+      <td>0.350181</td>
+      <td>0.313994</td>
+      <td>0.061695</td>
+    </tr>
+    <tr>
+      <th>theta__2</th>
+      <td>0.605714</td>
+      <td>0.268464</td>
+      <td>0.329506</td>
+      <td>1.000000</td>
+      <td>0.376094</td>
+      <td>0.400555</td>
+      <td>0.378128</td>
+      <td>0.265483</td>
+      <td>0.329640</td>
+      <td>-0.178865</td>
+    </tr>
+    <tr>
+      <th>theta__3</th>
+      <td>0.605968</td>
+      <td>0.340208</td>
+      <td>0.361995</td>
+      <td>0.376094</td>
+      <td>1.000000</td>
+      <td>0.377131</td>
+      <td>0.393790</td>
+      <td>0.323031</td>
+      <td>0.366408</td>
+      <td>-0.004266</td>
+    </tr>
+    <tr>
+      <th>theta__4</th>
+      <td>0.617708</td>
+      <td>0.229898</td>
+      <td>0.330835</td>
+      <td>0.400555</td>
+      <td>0.377131</td>
+      <td>1.000000</td>
+      <td>0.400101</td>
+      <td>0.228025</td>
+      <td>0.324586</td>
+      <td>-0.277632</td>
+    </tr>
+    <tr>
+      <th>theta__5</th>
+      <td>0.600656</td>
+      <td>0.277801</td>
+      <td>0.359453</td>
+      <td>0.378128</td>
+      <td>0.393790</td>
+      <td>0.400101</td>
+      <td>1.000000</td>
+      <td>0.251256</td>
+      <td>0.332723</td>
+      <td>-0.169251</td>
+    </tr>
+    <tr>
+      <th>theta__6</th>
+      <td>0.507750</td>
+      <td>0.459301</td>
+      <td>0.350181</td>
+      <td>0.265483</td>
+      <td>0.323031</td>
+      <td>0.228025</td>
+      <td>0.251256</td>
+      <td>1.000000</td>
+      <td>0.380259</td>
+      <td>0.379399</td>
+    </tr>
+    <tr>
+      <th>theta__7</th>
+      <td>0.559291</td>
+      <td>0.356955</td>
+      <td>0.313994</td>
+      <td>0.329640</td>
+      <td>0.366408</td>
+      <td>0.324586</td>
+      <td>0.332723</td>
+      <td>0.380259</td>
+      <td>1.000000</td>
+      <td>0.080647</td>
+    </tr>
+    <tr>
+      <th>tau</th>
+      <td>-0.137465</td>
+      <td>0.363872</td>
+      <td>0.061695</td>
+      <td>-0.178865</td>
+      <td>-0.004266</td>
+      <td>-0.277632</td>
+      <td>-0.169251</td>
+      <td>0.379399</td>
+      <td>0.080647</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+```python
+trace1_99['diverging'].shape, df99.shape
+```
+
+
+
+
+
+    ((10000,), (10000, 10))
+
+
+
+
+
+```python
+df99si = df99.reset_index()
+df99si.head()
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>mu</th>
+      <th>theta__0</th>
+      <th>theta__1</th>
+      <th>theta__2</th>
+      <th>theta__3</th>
+      <th>theta__4</th>
+      <th>theta__5</th>
+      <th>theta__6</th>
+      <th>theta__7</th>
+      <th>tau</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0.476766</td>
+      <td>5.244940</td>
+      <td>11.947961</td>
+      <td>-2.145423</td>
+      <td>-4.379043</td>
+      <td>-2.582646</td>
+      <td>-6.725088</td>
+      <td>0.876145</td>
+      <td>1.316700</td>
+      <td>5.273161</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>4.609032</td>
+      <td>12.076996</td>
+      <td>-7.616970</td>
+      <td>6.384172</td>
+      <td>5.940715</td>
+      <td>3.010732</td>
+      <td>13.464991</td>
+      <td>3.902260</td>
+      <td>-2.996996</td>
+      <td>6.836384</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>3.430340</td>
+      <td>10.423970</td>
+      <td>-0.889389</td>
+      <td>7.728908</td>
+      <td>8.366453</td>
+      <td>5.533233</td>
+      <td>15.195454</td>
+      <td>5.423708</td>
+      <td>5.681029</td>
+      <td>6.246578</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>3.950691</td>
+      <td>3.769489</td>
+      <td>-2.915153</td>
+      <td>4.353163</td>
+      <td>-3.110655</td>
+      <td>2.558563</td>
+      <td>-3.668601</td>
+      <td>7.396706</td>
+      <td>3.781000</td>
+      <td>3.469858</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>1.124394</td>
+      <td>8.179717</td>
+      <td>11.401375</td>
+      <td>13.333014</td>
+      <td>4.985015</td>
+      <td>-2.360172</td>
+      <td>3.140696</td>
+      <td>7.872551</td>
+      <td>1.341216</td>
+      <td>6.758684</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+```python
+dvs = sum(trace1_99['diverging']==True)
+```
+
+
+
+
+```python
+from pandas.plotting import parallel_coordinates as pc
+plt.figure(figsize=(16, 6))
+orderedticks = ['index', 'mu', 'tau']+["theta__{}".format(i) for i in range(8)]
+div_colors = list(islice(cycle(['g', 'g', 'g', 'g', 'g']), None, int(dvs)))
+pc(df99si[trace1_99['diverging']==True][orderedticks], 'index', color=div_colors, alpha=0.1);
+from itertools import cycle, islice
+undiv_colors = list(islice(cycle(['k', 'k', 'k', 'k', 'k']), None, 200))
+pc(df99si[trace1_99['diverging']==False].sample(200)[orderedticks], 'index', color=undiv_colors, alpha=0.05);
+plt.gca().legend_.remove()
+```
+
+
+
+![png](hmctweaking_files/hmctweaking_36_0.png)
 
 
 The divergences decrease, but dont totally go away, showing that we have lost some geometric ergodicity. And as we get to a very small step size we explore the funnel much better, but we are now taking our sampler more into a MH like random walk regime, and our sampler looks very strongly autocorrelated.
@@ -435,9 +918,8 @@ with schools2:
 
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [nu, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:09<00:00, 644.89it/s]
-    There were 3 divergences after tuning. Increase `target_accept` or reparameterize.
-    There were 1 divergences after tuning. Increase `target_accept` or reparameterize.
+    100%|██████████| 6000/6000 [00:08<00:00, 693.86it/s]
+    There were 8 divergences after tuning. Increase `target_accept` or reparameterize.
 
 
 And we reach the true value better as the number of samples increases, decreasing our bias
@@ -450,7 +932,7 @@ biasplot(trace2)
 
 
 
-![png](hmctweaking_files/hmctweaking_34_0.png)
+![png](hmctweaking_files/hmctweaking_42_0.png)
 
 
 How about our divergences? They have decreased too.
@@ -465,8 +947,8 @@ print('Percentage of Divergent %.5f' % divperc)
 ```
 
 
-    Number of Divergent 4
-    Percentage of Divergent 0.00080
+    Number of Divergent 8
+    Percentage of Divergent 0.00160
 
 
 
@@ -477,7 +959,7 @@ funnelplot(trace2)
 
 
 
-![png](hmctweaking_files/hmctweaking_37_0.png)
+![png](hmctweaking_files/hmctweaking_45_0.png)
 
 
 The divergences are infrequent and do not seem to concentrate anywhere, indicative of false positives. Lowering the step size should make them go away.
@@ -495,7 +977,7 @@ with schools2:
 
     Multiprocess sampling (2 chains in 2 jobs)
     NUTS: [nu, tau_log__, mu]
-    100%|██████████| 6000/6000 [00:14<00:00, 410.85it/s]
+    100%|██████████| 6000/6000 [00:13<00:00, 434.59it/s]
 
 
 
@@ -506,7 +988,7 @@ biasplot(trace2_95)
 
 
 
-![png](hmctweaking_files/hmctweaking_41_0.png)
+![png](hmctweaking_files/hmctweaking_49_0.png)
 
 
 
@@ -517,7 +999,7 @@ funnelplot(trace2_95)
 
 
 
-![png](hmctweaking_files/hmctweaking_42_0.png)
+![png](hmctweaking_files/hmctweaking_50_0.png)
 
 
 Indeed at a smaller step-size our false-positive divergences go away, and the lower curvature in our parametrization ensures geometric ergodicity deep in our funnel
@@ -577,7 +1059,7 @@ resample_plot(trace1);
 
 
 
-![png](hmctweaking_files/hmctweaking_49_0.png)
+![png](hmctweaking_files/hmctweaking_57_0.png)
 
 
 Awful. The momentum resamples here will do a very slow job of traversing this distribution. This is indicative of the second issue we were having with this centered model (the first was a large step size for the curvature causing loss of symplectivity): the momentum resampling simply cannot provide enough energy to traverse the large energy changes that occur in this hierarchical model.
@@ -592,7 +1074,7 @@ resample_plot(trace1_99)
 
 
 
-![png](hmctweaking_files/hmctweaking_52_0.png)
+![png](hmctweaking_files/hmctweaking_60_0.png)
 
 
 The match is much better for the non-centered version of our model.
@@ -605,7 +1087,7 @@ resample_plot(trace2)
 
 
 
-![png](hmctweaking_files/hmctweaking_54_0.png)
+![png](hmctweaking_files/hmctweaking_62_0.png)
 
 
 
@@ -616,5 +1098,12 @@ resample_plot(trace2_95)
 
 
 
-![png](hmctweaking_files/hmctweaking_55_0.png)
+![png](hmctweaking_files/hmctweaking_63_0.png)
+
+
+
+
+```python
+
+```
 
