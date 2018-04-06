@@ -33,3 +33,4 @@ layout: "default"
 - [lab 9](lab9.html): Normal-Normal Hierarchicals
 - [Lecture 19](lecture19.html): Posterior Predictive Checks and GLMs
 - [Lecture 20](lecture20.html): Decisions, Model Comparison, and GLMs
+- [Lab 10](lab10.html): Prosocial Chimps glm
