@@ -1380,6 +1380,8 @@ xgrid
 
 And then get the posterior predictive. But which one? Notice that in modelling this problem as a logistic regression, we are modeling each row of the data. But in the binomial below, we are modelling the story of 7 chimps. We could do 10, 100, and so on and so off. What would happen?
 
+Which should you use? The code below is for illustration, and for you to explore and correct.
+
 
 
 ```python
