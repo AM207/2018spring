@@ -1676,3 +1676,427 @@ plt.fill_between(lpgrid, pphpd[:,0], pphpd[:,1], color="b", alpha=0.1)
 
 
 The envelope of predictions is much wider here, but overlaps all the points! This is because of the varying intercepts, and it reflects the fact that there is much more variation in the data than is expected from a pure poisson model.
+
+## Cross Validation and stacking BMA in pymc3
+
+
+
+```python
+comparedf = pm.compare(traces, models, method="pseudo-BMA", ic='LOO')
+comparedf.head()
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LOO</th>
+      <th>pLOO</th>
+      <th>dLOO</th>
+      <th>weight</th>
+      <th>SE</th>
+      <th>dSE</th>
+      <th>warning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>79.84</td>
+      <td>4.63</td>
+      <td>0</td>
+      <td>0.93</td>
+      <td>11.17</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>85.26</td>
+      <td>4.17</td>
+      <td>5.43</td>
+      <td>0.06</td>
+      <td>8.96</td>
+      <td>8.01</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>89.92</td>
+      <td>9.96</td>
+      <td>10.08</td>
+      <td>0.01</td>
+      <td>13.53</td>
+      <td>6.11</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>141.77</td>
+      <td>8.44</td>
+      <td>61.93</td>
+      <td>0</td>
+      <td>31.74</td>
+      <td>32.63</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>151.24</td>
+      <td>17.34</td>
+      <td>71.4</td>
+      <td>0</td>
+      <td>44.91</td>
+      <td>44.37</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+```python
+temp=comparedf.sort_index()
+temp['name']=names
+comparedf = temp.sort_values('LOO').set_index('name')
+comparedf
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LOO</th>
+      <th>pLOO</th>
+      <th>dLOO</th>
+      <th>weight</th>
+      <th>SE</th>
+      <th>dSE</th>
+      <th>warning</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>m2c_nopc</th>
+      <td>79.84</td>
+      <td>4.63</td>
+      <td>0</td>
+      <td>0.93</td>
+      <td>11.17</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m2c_onlyp</th>
+      <td>85.26</td>
+      <td>4.17</td>
+      <td>5.43</td>
+      <td>0.06</td>
+      <td>8.96</td>
+      <td>8.01</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m1c</th>
+      <td>89.92</td>
+      <td>9.96</td>
+      <td>10.08</td>
+      <td>0.01</td>
+      <td>13.53</td>
+      <td>6.11</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m2c_onlyic</th>
+      <td>141.77</td>
+      <td>8.44</td>
+      <td>61.93</td>
+      <td>0</td>
+      <td>31.74</td>
+      <td>32.63</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m2c_onlyc</th>
+      <td>151.24</td>
+      <td>17.34</td>
+      <td>71.4</td>
+      <td>0</td>
+      <td>44.91</td>
+      <td>44.37</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+```python
+pm.compareplot(comparedf)
+```
+
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x11738c6d8>
+
+
+
+
+![png](Islands2_files/Islands2_84_1.png)
+
+
+
+
+```python
+comparedf_s = pm.compare(traces, models, method="stacking", ic='WAIC')
+comparedf_s.head()
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>WAIC</th>
+      <th>pWAIC</th>
+      <th>dWAIC</th>
+      <th>weight</th>
+      <th>SE</th>
+      <th>dSE</th>
+      <th>warning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>79.06</td>
+      <td>4.24</td>
+      <td>0</td>
+      <td>0.76</td>
+      <td>11.06</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>84.09</td>
+      <td>7.05</td>
+      <td>5.04</td>
+      <td>0</td>
+      <td>12.19</td>
+      <td>3.77</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>84.43</td>
+      <td>3.75</td>
+      <td>5.37</td>
+      <td>0.24</td>
+      <td>8.94</td>
+      <td>7.93</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>141.65</td>
+      <td>8.38</td>
+      <td>62.6</td>
+      <td>0</td>
+      <td>31.7</td>
+      <td>32.84</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>150.44</td>
+      <td>16.94</td>
+      <td>71.38</td>
+      <td>0</td>
+      <td>44.67</td>
+      <td>44.44</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+```python
+temp=comparedf_s.sort_index()
+temp['name']=names
+comparedf_s = temp.sort_values('WAIC').set_index('name')
+comparedf_s
+```
+
+
+
+
+
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>WAIC</th>
+      <th>pWAIC</th>
+      <th>dWAIC</th>
+      <th>weight</th>
+      <th>SE</th>
+      <th>dSE</th>
+      <th>warning</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>m2c_nopc</th>
+      <td>79.06</td>
+      <td>4.24</td>
+      <td>0</td>
+      <td>0.76</td>
+      <td>11.06</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m1c</th>
+      <td>84.09</td>
+      <td>7.05</td>
+      <td>5.04</td>
+      <td>0</td>
+      <td>12.19</td>
+      <td>3.77</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m2c_onlyp</th>
+      <td>84.43</td>
+      <td>3.75</td>
+      <td>5.37</td>
+      <td>0.24</td>
+      <td>8.94</td>
+      <td>7.93</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m2c_onlyic</th>
+      <td>141.65</td>
+      <td>8.38</td>
+      <td>62.6</td>
+      <td>0</td>
+      <td>31.7</td>
+      <td>32.84</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>m2c_onlyc</th>
+      <td>150.44</td>
+      <td>16.94</td>
+      <td>71.38</td>
+      <td>0</td>
+      <td>44.67</td>
+      <td>44.44</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+

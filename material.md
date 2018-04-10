@@ -170,3 +170,11 @@ Lecture 20: **Decisions, Model Comparison, and GLMs**
 Lab 10: **Prosocial Chimps Bernoulli glm**
 
 [Notes and Material](lectures/lab10.html)
+
+---
+
+Lecture 21: **Decisions, Model Comparison, and GLMs, Ensembles, Workflow**
+
+[Slides, Notes and Readings](lectures/lecture21.html)
+
+
