@@ -35,3 +35,4 @@ layout: "default"
 - [Lecture 20](lecture20.html): Decisions, Model Comparison, and GLMs
 - [Lab 10](lab10.html): Prosocial Chimps glm
 - [Lecture 21](lecture21.html): Decisions, Model Comparison, and GLMs, Ensembles, Workflow
+- [Lecture 22](lecture22.html): Workflow and Mixtures
