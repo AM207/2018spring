@@ -177,4 +177,10 @@ Lecture 21: **Decisions, Model Comparison, and GLMs, Ensembles, Workflow**
 
 [Slides, Notes and Readings](lectures/lecture21.html)
 
+Lecture 22: **Workflow and Mixtures**
 
+[Slides, Notes and Readings](lectures/lecture22.html)
+
+Lab11: **Mixtures and log-sum-exp marginals**
+
+[Notes and Material](lectures/lab11.html)
