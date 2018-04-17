@@ -184,3 +184,9 @@ Lecture 22: **Workflow and Mixtures**
 Lab11: **Mixtures and log-sum-exp marginals**
 
 [Notes and Material](lectures/lab11.html)
+
+---
+
+Lecture 23: **EM and Mixtures**
+
+[Slides, Notes and Readings](lectures/lecture23.html)
