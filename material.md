@@ -190,3 +190,6 @@ Lab11: **Mixtures and log-sum-exp marginals**
 Lecture 23: **EM and Mixtures**
 
 [Slides, Notes and Readings](lectures/lecture23.html)
+
+Lecture 24: Expectation Maximization and Variational Inference
+[Slides, Notes, and Readings](lectures/lecture24.html)

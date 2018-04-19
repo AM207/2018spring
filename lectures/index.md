@@ -38,3 +38,4 @@ layout: "default"
 - [Lecture 22](lecture22.html): Workflow and Mixtures
 - [Lab 11](lab11.html): Mixtures and log-sum-exp marginals
 - [Lecture 23](lecture23.html): EM and Mixtures
+- [Lecture 24](lecture24.html): Expectation Maximization and Variational Inference
