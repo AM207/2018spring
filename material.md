@@ -193,3 +193,6 @@ Lecture 23: **EM and Mixtures**
 
 Lecture 24: Expectation Maximization and Variational Inference
 [Slides, Notes, and Readings](lectures/lecture24.html)
+
+Lab12: Correlations and Mixtures and ADVI
+[Notes and Material](lectures/lab12.html)
