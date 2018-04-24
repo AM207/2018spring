@@ -196,3 +196,9 @@ Lecture 24: Expectation Maximization and Variational Inference
 
 Lab12: Correlations and Mixtures and ADVI
 [Notes and Material](lectures/lab12.html)
+
+---
+
+Lecture 25: **Variational Bayes and Generative Models**
+
+[Slides, Notes and Readings](lectures/lecture25.html)
