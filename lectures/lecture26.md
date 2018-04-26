@@ -3,7 +3,6 @@ shorttitle: "Lecture26"
 title: "Lecture 26: Wrapup and What we did"
 layout: "lecture"
 noline: 1
-notes: []
 ---
 
 ## Slides
