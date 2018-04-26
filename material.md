@@ -202,3 +202,7 @@ Lab12: Correlations and Mixtures and ADVI
 Lecture 25: **Variational Bayes and Generative Models**
 
 [Slides, Notes and Readings](lectures/lecture25.html)
+
+Lecture 26: **Recap**
+
+[Slides, Notes and Readings](lectures/lecture26.html)

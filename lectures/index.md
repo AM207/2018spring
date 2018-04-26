@@ -41,3 +41,4 @@ layout: "default"
 - [Lecture 24](lecture24.html): Expectation Maximization and Variational Inference
 - [Lab 12](lab12.html): Mixtures and Correlation
 - [Lecture 25](lecture25.html): Variational Bayes and Generative Models
+- [Lecture 26](lecture26.html): Recap
